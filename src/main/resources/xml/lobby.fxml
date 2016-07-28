@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerLobby">
+   <children>
+      <AnchorPane prefHeight="501.0" prefWidth="800.0">
+         <children>
+            <ListView fx:id="list" layoutX="14.0" layoutY="60.0" onMouseClicked="#onClickList" prefHeight="407.0" prefWidth="200.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="60.0" />
+            <Label layoutX="14.0" layoutY="22.0" prefHeight="31.0" prefWidth="200.0" text="Список игроков онлайн" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="22.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="305.0" layoutY="425.0" mnemonicParsing="false" onAction="#duelButton" prefHeight="42.0" prefWidth="190.0" text="Вызвать на дуэль" AnchorPane.bottomAnchor="34.0" />
+            <Label layoutX="300.0" layoutY="22.0" prefHeight="31.0" prefWidth="200.0" text="Статистика  противника">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="287.0" layoutY="66.0" prefHeight="31.0" prefWidth="113.0" text="Ник">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="opNameL" layoutX="400.0" layoutY="66.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="287.0" layoutY="97.0" prefHeight="31.0" prefWidth="113.0" text="Сыграно">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="opGameL" layoutX="400.0" layoutY="97.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="287.0" layoutY="128.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="opWinsL" layoutX="400.0" layoutY="128.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="287.0" layoutY="159.0" prefHeight="31.0" prefWidth="113.0" text="Статус">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="opStatusL" layoutX="400.0" layoutY="159.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="585.0" layoutY="22.0" prefHeight="31.0" prefWidth="143.0" text="Своя статистика">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="543.0" layoutY="66.0" prefHeight="31.0" prefWidth="113.0" text="Ник">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="543.0" layoutY="97.0" prefHeight="31.0" prefWidth="113.0" text="Сыграно">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="543.0" layoutY="134.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="myNameL" layoutX="643.0" layoutY="66.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="myGameL" layoutX="643.0" layoutY="97.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="myWinsL" layoutX="643.0" layoutY="134.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="colorChoice" layoutX="543.0" layoutY="264.0" prefHeight="29.0" prefWidth="230.0" />
+            <Label layoutX="586.0" layoutY="224.0" text="Приоритет цвета">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
