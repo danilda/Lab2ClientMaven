@@ -1,15 +1,24 @@
 package control;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.*;
 import model.worker.DoStep;
+import model.worker.Mate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import static java.util.Objects.isNull;
 
@@ -17,6 +26,9 @@ public class Controller {
 
     @FXML
     private GridPane board;
+
+    @FXML
+    private Button buttonLose;
 
     private Image pawn = new Image("/image/pawn.png");
     private Image pawnWhite = new Image("/image/pawnWhite.png");
@@ -32,6 +44,7 @@ public class Controller {
     private Image queenWhite = new Image("/image/queenWhite.png");
 
     private static boolean white ;
+    private static boolean end ;
 
     private Box[][] matrix;
 
@@ -54,6 +67,14 @@ public class Controller {
 
     public static void setNowStep(boolean nowStep) {
         Controller.nowStep = nowStep;
+    }
+
+    public static boolean isEnd() {
+        return end;
+    }
+
+    public static void setEnd(boolean end) {
+        Controller.end = end;
     }
 
     @FXML
@@ -208,6 +229,7 @@ public class Controller {
             matrix[0][4].white = true;
         }
         DoStep.setMatrix(matrix);
+        Mate.setButton(buttonLose);
     }
 
     private int findIndex(Box[][] matrix , Box box){
@@ -274,7 +296,22 @@ public class Controller {
                     System.out.println("Мат -------->" + ChessLogik.checkOnMate(matrix));
                     Send.sendStep(findIndex(matrix, nowBox), findIndex(matrix, thisBox) );
                     if(ChessLogik.checkOnMate(matrix)) {
+                        buttonLose.setText("Закрыть");
                         Send.sendMate();
+                        end = true;
+                        Stage stage = new Stage();
+                        Parent root = null;
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/xml/gameWin.fxml"));
+                            stage.setTitle("Hello World");
+                            stage.setResizable(false);
+                            stage.setScene(new Scene(root));
+                            stage.initModality(Modality.WINDOW_MODAL);
+                            stage.initOwner(buttonLose.getScene().getWindow());
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     nowBox.image.setImage(null);
                     nowBox.name = null;
@@ -298,6 +335,39 @@ public class Controller {
                         }
                 }
             }
+
+        }
+
+    }
+//    public void mate(){
+//        buttonLose.setText("Закрыть");
+//
+//        Stage stage = new Stage();
+//        Parent root = null;
+//        try {
+//            root = FXMLLoader.load(getClass().getResource("/xml/gameMate.fxml"));
+//            stage.setTitle("Hello World");
+//            stage.setResizable(false);
+//            stage.setScene(new Scene(root));
+//            stage.initModality(Modality.WINDOW_MODAL);
+//            stage.initOwner(board.getScene().getWindow());
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public void buttonLoseAction(){
+        if(end){
+            Stage stageTheLabelBelongs = (Stage) buttonLose.getScene().getWindow();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/xml/lobby.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stageTheLabelBelongs.setScene(new Scene(root));
+        } else {
 
         }
 

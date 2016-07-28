@@ -85,7 +85,6 @@ public class ControllerLogin{
     }
 
     public void nextStage(){
-        System.out.println("какае-то имба");
         Stage stageTheLabelBelongs = (Stage) button.getScene().getWindow();
         Parent root = null;
         try {

@@ -69,13 +69,13 @@ public class ChessLogik {
                     && matrix[i-1][y-1].white != box.white)
                 matrix[i-1][y-1].pane.setStyle("-fx-background-color: #ff8584;");
         } else {
-            if((i + 1 >= 0) && (y >= 0) && (y < 8) && (i+1 < 8) && matrix[i-1][y].name == null){
+            if((i + 1 >= 0) && (y >= 0) && (y < 8) && (i+1 < 8) && matrix[i+1][y].name == null){
                 matrix[i+1][y].pane.setStyle("-fx-background-color: #a5f2de;");
             }
-            if((i + 1 >= 0) && (y+1 >= 0) && (y+1 < 8) && (i+1 < 8) && matrix[i-1][y+1].name != null
+            if((i + 1 >= 0) && (y+1 >= 0) && (y+1 < 8) && (i+1 < 8) && matrix[i+1][y+1].name != null
                     && matrix[i+1][y+1].white != box.white)
                 matrix[i+1][y+1].pane.setStyle("-fx-background-color: #ff8584;");
-            if((i + 1 >= 0) && (y-1 >= 0) && (y-1 < 8) && (i+1 < 8) && matrix[i-1][y-1].name != null
+            if((i + 1 >= 0) && (y-1 >= 0) && (y-1 < 8) && (i+1 < 8) && matrix[i+1][y-1].name != null
                     && matrix[i+1][y-1].white != box.white)
                 matrix[i+1][y-1].pane.setStyle("-fx-background-color: #ff8584;");
         }

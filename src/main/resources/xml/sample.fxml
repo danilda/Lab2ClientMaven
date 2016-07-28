@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
@@ -297,5 +298,7 @@
             </GridPane>
          </children>
       </HBox>
+      <Button layoutX="627.0" layoutY="591.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="146.0" text="Предложить ничью" />
+      <Button fx:id="buttonLose" layoutX="781.0" layoutY="591.0" mnemonicParsing="false" onAction="#buttonLoseAction" prefHeight="29.0" prefWidth="105.0" text="Сдаться" />
    </children>
 </AnchorPane>
