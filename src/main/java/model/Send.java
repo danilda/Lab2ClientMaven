@@ -62,13 +62,13 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-    public static void sendQueryLobb(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>Lobby</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
-    }
+//    public static void sendQueryLobb(){
+//        String result;
+//        result = "<body>\n" +
+//                " <metaInfo>Lobby</metaInfo>\n" +
+//                "</body>";
+//        Main.send(result);
+//    }
 
 
     public static void sendCancel(){
@@ -87,6 +87,7 @@ public class Send extends Thread{
                 "</body>";
         Main.send(result);
     }
+
     public static void sendMate(){
         String result;
         result = "<body>\n" +
@@ -94,5 +95,32 @@ public class Send extends Thread{
                 "</body>";
         Main.send(result);
     }
+
+    public static void sendQueryDraw(){
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>Draw</metaInfo>\n" +
+                "</body>";
+        Main.send(result);
+    }
+
+    public static void sendCancelDraw(){
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>CancelDraw</metaInfo>\n" +
+                "</body>";
+        Main.send(result);
+    }
+
+    public static void sendSuccessDraw(){
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>SuccessDraw</metaInfo>\n" +
+                "</body>";
+        Main.send(result);
+    }
+
+
+
 
 }

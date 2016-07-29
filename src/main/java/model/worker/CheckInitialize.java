@@ -17,6 +17,7 @@ public class CheckInitialize implements Doer {
             ControllerLobby.setMyName((String) parameters.get(3));
             ControllerLobby.setMyGame((String) parameters.get(4));
             ControllerLobby.setMyWins((String) parameters.get(5));
+            ControllerLobby.setMyLoses((String) parameters.get(6));//lose
         } else {
             ControllerLogin.setCheck((byte)-1);
         }

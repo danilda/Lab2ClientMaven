@@ -15,7 +15,8 @@ public class QueryUser implements Doer {
         ControllerLobby.setOpName((String)parameters.get(1));
         ControllerLobby.setOpGame((String)parameters.get(2));
         ControllerLobby.setOpWins((String)parameters.get(3));
-        ControllerLobby.setOpStatus((String)parameters.get(4));
+        ControllerLobby.setOpLoses((String)parameters.get(4));
+        ControllerLobby.setOpStatus((String)parameters.get(5));
         ControllerLobby.setSwitcher(true);
     }
 

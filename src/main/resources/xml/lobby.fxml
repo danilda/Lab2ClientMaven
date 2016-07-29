@@ -51,12 +51,12 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="287.0" layoutY="159.0" prefHeight="31.0" prefWidth="113.0" text="Статус">
+            <Label layoutX="287.0" layoutY="193.0" prefHeight="31.0" prefWidth="113.0" text="Статус">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="opStatusL" layoutX="400.0" layoutY="159.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="opStatusL" layoutX="400.0" layoutY="193.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -76,7 +76,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="543.0" layoutY="134.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
+            <Label layoutX="543.0" layoutY="128.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
                <font>
                   <Font size="18.0" />
                </font>
@@ -91,13 +91,33 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="myWinsL" layoutX="643.0" layoutY="134.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="myWinsL" layoutX="643.0" layoutY="128.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
             <ChoiceBox fx:id="colorChoice" layoutX="543.0" layoutY="264.0" prefHeight="29.0" prefWidth="230.0" />
             <Label layoutX="586.0" layoutY="224.0" text="Приоритет цвета">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="287.0" layoutY="159.0" prefHeight="31.0" prefWidth="113.0" text="Ничей">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="opDrawsL" layoutX="400.0" layoutY="159.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="543.0" layoutY="159.0" prefHeight="31.0" prefWidth="113.0" text="Ничей">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="myDrawsL" layoutX="643.0" layoutY="159.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>

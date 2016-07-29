@@ -34,9 +34,11 @@ public class ControllerLobby{
     private static String myName;
     private static String myGame;
     private static String myWins;
+    private static String myLoses;
     private static String opName;
     private static String opGame;
     private static String opWins;
+    private static String opLoses;
     private static String opStatus;
     private static boolean switcher;
     private static Labeled dialog;
@@ -53,11 +55,15 @@ public class ControllerLobby{
     @FXML
     private Label opStatusL;
     @FXML
+    private Label opDrawsL;
+    @FXML
     private Label myNameL;
     @FXML
     private Label myGameL;
     @FXML
-    private Label myWinsL;// добавить в прошлом класе
+    private Label myWinsL;
+    @FXML
+    private Label myDrawsL;
     @FXML
     private ChoiceBox<String> colorChoice;
 
@@ -171,6 +177,21 @@ public class ControllerLobby{
         itemsList = FXCollections.observableArrayList (lobby);
     }
 
+    public static String getMyLoses() {
+        return myLoses;
+    }
+
+    public static void setMyLoses(String myLoses) {
+        ControllerLobby.myLoses = myLoses;
+    }
+
+    public static String getOpLoses() {
+        return opLoses;
+    }
+
+    public static void setOpLoses(String opLoses) {
+        ControllerLobby.opLoses = opLoses;
+    }
 
     @FXML
     private void initialize() {
@@ -199,6 +220,7 @@ public class ControllerLobby{
         myGameL.setText(myGame);
         myWinsL.setText(myWins);
         CheckDuel.setLabel(myGameL);
+        myDrawsL.setText(Integer.toString(Integer.parseInt(myGame) - Integer.parseInt(myWins) - Integer.parseInt(myLoses)) );
         color = "random";
         ObservableList<String> itemsForChoice = FXCollections.observableArrayList ( "Белый", "Черный", "Не важно");
         Duel.setLabel(myGameL);
@@ -248,6 +270,7 @@ public class ControllerLobby{
                 opNameL.setText(opName);
                 opGameL.setText(opGame);
                 opWinsL.setText(opWins);
+                opDrawsL.setText(Integer.toString(Integer.parseInt(opGame) - Integer.parseInt(opWins) - Integer.parseInt(opLoses)) );
                 opStatusL.setText(opStatus);
                 switcher = false;
                 break;

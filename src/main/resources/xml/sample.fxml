@@ -298,7 +298,7 @@
             </GridPane>
          </children>
       </HBox>
-      <Button layoutX="627.0" layoutY="591.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="146.0" text="Предложить ничью" />
+      <Button fx:id="buttonDraw" layoutX="627.0" layoutY="591.0" mnemonicParsing="false" onAction="#goDraw" prefHeight="29.0" prefWidth="146.0" text="Предложить ничью" />
       <Button fx:id="buttonLose" layoutX="781.0" layoutY="591.0" mnemonicParsing="false" onAction="#buttonLoseAction" prefHeight="29.0" prefWidth="105.0" text="Сдаться" />
    </children>
 </AnchorPane>

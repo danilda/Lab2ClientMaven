@@ -15,8 +15,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
+import model.worker.CheckDraw;
 import model.worker.DoStep;
 import model.worker.Mate;
+import model.worker.SuccessDraw;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -230,6 +232,9 @@ public class Controller {
         }
         DoStep.setMatrix(matrix);
         Mate.setButton(buttonLose);
+        CheckDraw.setButton(buttonLose);
+        SuccessDraw.setButtonControll(buttonLose);
+        ControllerDraw.setButtonControll(buttonLose);
     }
 
     private int findIndex(Box[][] matrix , Box box){
@@ -339,23 +344,22 @@ public class Controller {
         }
 
     }
-//    public void mate(){
-//        buttonLose.setText("Закрыть");
-//
-//        Stage stage = new Stage();
-//        Parent root = null;
-//        try {
-//            root = FXMLLoader.load(getClass().getResource("/xml/gameMate.fxml"));
-//            stage.setTitle("Hello World");
-//            stage.setResizable(false);
-//            stage.setScene(new Scene(root));
-//            stage.initModality(Modality.WINDOW_MODAL);
-//            stage.initOwner(board.getScene().getWindow());
-//            stage.show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void goDraw(){
+        Send.sendQueryDraw();
+        Stage stage = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/xml/lobbyWait.fxml"));
+            stage.setTitle("Hello World");
+            stage.setResizable(false);
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(board.getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void buttonLoseAction(){
         if(end){
