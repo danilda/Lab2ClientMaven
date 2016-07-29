@@ -120,7 +120,13 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-
+    public static void sendPass(){
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>Pass</metaInfo>\n" +
+                "</body>";
+        Main.send(result);
+    }
 
 
 }

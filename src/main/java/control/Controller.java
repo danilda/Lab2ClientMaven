@@ -15,10 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
-import model.worker.CheckDraw;
-import model.worker.DoStep;
-import model.worker.Mate;
-import model.worker.SuccessDraw;
+import model.worker.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -235,6 +232,7 @@ public class Controller {
         CheckDraw.setButton(buttonLose);
         SuccessDraw.setButtonControll(buttonLose);
         ControllerDraw.setButtonControll(buttonLose);
+        Pass.setButton(buttonLose);
     }
 
     private int findIndex(Box[][] matrix , Box box){
@@ -372,8 +370,17 @@ public class Controller {
             }
             stageTheLabelBelongs.setScene(new Scene(root));
         } else {
-
+            Send.sendPass();
+            Stage stageTheLabelBelongs = (Stage) buttonLose.getScene().getWindow();
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/xml/lobby.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stageTheLabelBelongs.setScene(new Scene(root));
         }
 
     }
+
 }
