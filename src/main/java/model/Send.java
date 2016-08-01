@@ -128,5 +128,14 @@ public class Send extends Thread{
         Main.send(result);
     }
 
+    public static void sendMessage(String text){
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>Message</metaInfo>\n" +
+                " <text>" + text + "</text>\n" +
+                "</body>";
+        Main.send(result);
+    }
+
 
 }

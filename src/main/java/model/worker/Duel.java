@@ -45,7 +45,9 @@ public class Duel implements Doer {
                 try {
                     Stage stageTheLabelBelongs = (Stage) label.getScene().getWindow();
                     Parent root = FXMLLoader.load(getClass().getResource("/xml/sample.fxml"));
-                    stageTheLabelBelongs.setScene(new Scene(root));
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(0, "style.css");
+                    stageTheLabelBelongs.setScene(scene);
                 } catch (Exception e){
 
                 }

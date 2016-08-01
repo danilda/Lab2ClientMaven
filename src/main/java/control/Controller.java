@@ -1,13 +1,14 @@
 package control;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -16,12 +17,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 import model.worker.*;
+import view.PaneForList;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import static java.util.Objects.isNull;
 
 public class Controller {
+
+    @FXML
+    private ListView<Pane> chat;
+
+    @FXML
+    private TextArea textMessage;
 
     @FXML
     private GridPane board;
@@ -42,6 +50,7 @@ public class Controller {
     private Image queen = new Image("/image/queen.png");
     private Image queenWhite = new Image("/image/queenWhite.png");
 
+    private ObservableList<Pane> chatList = FXCollections.observableArrayList ( );
     private static boolean white ;
     private static boolean end ;
 
@@ -233,6 +242,7 @@ public class Controller {
         SuccessDraw.setButtonControll(buttonLose);
         ControllerDraw.setButtonControll(buttonLose);
         Pass.setButton(buttonLose);
+        Message.setController(this);
     }
 
     private int findIndex(Box[][] matrix , Box box){
@@ -381,6 +391,21 @@ public class Controller {
             stageTheLabelBelongs.setScene(new Scene(root));
         }
 
+    }
+
+    public void sendMessage(){
+        chatList.add(new PaneForList("вы", textMessage.getText()).returnObject());
+        chat.setItems(chatList);
+        chat.scrollTo(chatList.size()-1);
+        Send.sendMessage(textMessage.getText());
+        textMessage.setText("");
+
+    }
+
+    public void refreshMessages(String name, String text){
+
+        chatList.add(new PaneForList(name, text).returnObject());
+        chat.setItems(chatList);
     }
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -61,16 +62,11 @@ public class Distribut extends Thread {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 SAXParser saxParser = null;
                 try {
-                    FileWriter writer = new FileWriter("src//main//resources//xml//ForParse"+result.hashCode()+".xml", false);
                     System.out.println(result);
-                    writer.write(result);
-                    writer.flush();
-                    InputStream xmlInput = new FileInputStream( "src//main//resources//xml//ForParse"+result.hashCode()+".xml" );
                     saxParser = factory.newSAXParser();
                     SaxHandler handler = new SaxHandler();
-                    saxParser.parse(xmlInput, handler);
-                    writer.close();
-                    new File("src//main//resources//xml//ForParse"+result.hashCode()+".xml" ).delete();
+                    InputSource is = new InputSource(new StringReader(result));
+                    saxParser.parse(is, handler);
                     System.out.println(handler.getResult());
                     Parser.callDoer(handler.getResult());
                 } catch (IOException e) {
