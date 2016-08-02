@@ -137,5 +137,12 @@ public class Send extends Thread{
         Main.send(result);
     }
 
+    public static void sendPad(){
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>Pad</metaInfo>\n" +
+                "</body>";
+        Main.send(result);
+    }
 
 }

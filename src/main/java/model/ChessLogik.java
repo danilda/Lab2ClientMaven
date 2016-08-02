@@ -412,11 +412,35 @@ public class ChessLogik {
                     }
                 }
             }
-
             return false;
         }
         return false;
     }
+
+    public static boolean checkOnPad(Box[][] matrix){
+        int tmp = findKing(!Controller.isWhite(), matrix);
+        int kingI = tmp/10;
+        int kingY = tmp%10;
+        Box[][] tmpMatrix ;
+        tmpMatrix = swichMatrix(matrix);
+        if(!checkOnShah(matrix, kingI, kingY)){
+            for(int i = 0; i < 8; i++)
+                for(int y = 0; y < 8; y++){
+                    checkOnStep(tmpMatrix, i , y);
+                }
+            for(int i = 0; i < 8; i++) {
+                for (int y = 0; y < 8; y++) {
+                    if (tmpMatrix[i][y].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
+                            tmpMatrix[i][y].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
 
     private static Box[][] swichMatrix(Box[][] matrixPr){
         Box[][] tmpMatrix = new Box[8][8];

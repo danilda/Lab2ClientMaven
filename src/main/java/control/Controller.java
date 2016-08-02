@@ -238,6 +238,7 @@ public class Controller {
         }
         DoStep.setMatrix(matrix);
         Mate.setButton(buttonLose);
+        Pad.setButton(buttonLose);
         CheckDraw.setButton(buttonLose);
         SuccessDraw.setButtonControll(buttonLose);
         ControllerDraw.setButtonControll(buttonLose);
@@ -325,6 +326,25 @@ public class Controller {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if(ChessLogik.checkOnPad(matrix)){
+                        buttonLose.setText("Закрыть");
+                        Send.sendPad();
+                        end = true;
+                        Stage stage = new Stage();
+                        Parent root = null;
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/xml/gamePad.fxml"));
+                            stage.setTitle("Hello World");
+                            stage.setResizable(false);
+                            stage.setScene(new Scene(root));
+                            stage.initModality(Modality.WINDOW_MODAL);
+                            stage.initOwner(buttonLose.getScene().getWindow());
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                     nowBox.image.setImage(null);
                     nowBox.name = null;
