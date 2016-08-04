@@ -84,6 +84,11 @@ public class ChessLogik {
                 matrix[i-2][y].pane.setStyle("-fx-background-color: #a5f2de;");
             }
         }
+        if(i == 1 && !isYou){
+            if(matrix[i+2][y].name == null){
+                matrix[i+2][y].pane.setStyle("-fx-background-color: #a5f2de;");
+            }
+        }
 
     }
 
@@ -432,13 +437,13 @@ public class ChessLogik {
                 for (int y = 0; y < 8; y++) {
                     if (tmpMatrix[i][y].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
                             tmpMatrix[i][y].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
-                        return true;
+                        return false;
                     }
                 }
             }
-            return false;
+            return true;
         }
-        return false;
+        return true;
     }
 
 

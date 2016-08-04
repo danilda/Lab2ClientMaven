@@ -170,7 +170,12 @@ public class ControllerLobby{
     }
 
     public static void lobbyRemoveName(String name) {
-        itemsList.remove(name);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                itemsList.remove(name);
+            }
+        });
     }
 
     public static void setLobby(ArrayList<String> lobby) {

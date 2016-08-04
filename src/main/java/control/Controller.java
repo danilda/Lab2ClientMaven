@@ -85,6 +85,62 @@ public class Controller {
         Controller.end = end;
     }
 
+    public Box[][] getMatrix() {
+        return matrix;
+    }
+
+    public void setMatrix(Box[][] matrix) {
+        this.matrix = matrix;
+    }
+
+    public Image getHorse() {
+        return horse;
+    }
+
+    public void setHorse(Image horse) {
+        this.horse = horse;
+    }
+
+    public Image getRook() {
+        return rook;
+    }
+
+    public void setRook(Image rook) {
+        this.rook = rook;
+    }
+
+    public Image getBis() {
+        return bis;
+    }
+
+    public void setBis(Image bis) {
+        this.bis = bis;
+    }
+
+    public Image getQueen() {
+        return queen;
+    }
+
+    public void setQueen(Image queen) {
+        this.queen = queen;
+    }
+
+    public Image getHorseWhite() {
+        return horseWhite;
+    }
+
+    public Image getRookWhite() {
+        return rookWhite;
+    }
+
+    public Image getBisWhite() {
+        return bisWhite;
+    }
+
+    public Image getQueenWhite() {
+        return queenWhite;
+    }
+
     @FXML
     private void initialize(){
         ObservableList allChildren = board.getChildren();
@@ -244,6 +300,8 @@ public class Controller {
         ControllerDraw.setButtonControll(buttonLose);
         Pass.setButton(buttonLose);
         Message.setController(this);
+        ControllerPawnUp.setController(this);
+        PawnUp.setController(this);
     }
 
     private int findIndex(Box[][] matrix , Box box){
@@ -309,6 +367,23 @@ public class Controller {
                     changedBox.white = nowBox.white;
                     System.out.println("Мат -------->" + ChessLogik.checkOnMate(matrix));
                     Send.sendStep(findIndex(matrix, nowBox), findIndex(matrix, thisBox) );
+                    if(findIndex(matrix, thisBox)<10 && (thisBox.name.equals("pawn")
+                            || thisBox.name.equals("pawnWhite"))){
+                        ControllerPawnUp.setPosition((byte) findIndex(matrix, thisBox));
+                        Stage stage = new Stage();
+                        Parent root = null;
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/xml/gamePawnUp.fxml"));
+                            stage.setTitle("Hello World");
+                            stage.setResizable(false);
+                            stage.setScene(new Scene(root));
+                            stage.initModality(Modality.WINDOW_MODAL);
+                            stage.initOwner(buttonLose.getScene().getWindow());
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     if(ChessLogik.checkOnMate(matrix)) {
                         buttonLose.setText("Закрыть");
                         Send.sendMate();
@@ -344,7 +419,7 @@ public class Controller {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
+                        ControllerMate.setInvisibility(true);
                     }
                     nowBox.image.setImage(null);
                     nowBox.name = null;

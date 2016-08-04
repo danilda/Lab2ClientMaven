@@ -32,4 +32,5 @@ public class ControllerMate {
         ((Stage) buttonCancelMate.getScene().getWindow()).close();
         ControllerLobby.setDialog(null);
     }
+
 }

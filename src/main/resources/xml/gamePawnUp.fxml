@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="332.0" maxWidth="610.0" minHeight="-Infinity" minWidth="310.0" prefHeight="237.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerPawnUp">
+   <children>
+      <AnchorPane prefHeight="233.0" prefWidth="309.0">
+         <children>
+            <Label layoutX="40.0" layoutY="14.0" text="Выберите фигуру, на которую хотите заменить пешку">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="rook" fitHeight="125.0" fitWidth="123.0" layoutX="14.0" layoutY="75.0" onMouseClicked="#rookClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="horse" fitHeight="125.0" fitWidth="123.0" layoutX="137.0" layoutY="75.0" onMouseClicked="#horseClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="bis" fitHeight="125.0" fitWidth="123.0" layoutX="263.0" layoutY="75.0" onMouseClicked="#bisClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="queen" fitHeight="125.0" fitWidth="123.0" layoutX="386.0" layoutY="75.0" onMouseClicked="#queenClicked" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

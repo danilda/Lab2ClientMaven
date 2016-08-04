@@ -145,4 +145,22 @@ public class Send extends Thread{
         Main.send(result);
     }
 
+    public static void sendDisconnection() {
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>Disconnected</metaInfo>\n" +
+                "</body>";
+        Main.send(result);
+    }
+
+    public static void sendPawnUp(byte position, String name) {
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>PawnUp</metaInfo>\n" +
+                " <position>"+ position +"</position>\n" +
+                " <name>"+ name +"</name>\n" +
+                "</body>";
+        Main.send(result);
+    }
+
 }

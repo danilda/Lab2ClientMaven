@@ -1,5 +1,6 @@
 package view;
 
+import model.MyShutdownHook;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -35,29 +36,19 @@ public class Main extends Application {
             this.socket = new Socket("localhost", 4444);
             in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             out =  new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+            MyShutdownHook myShutdownHook = new MyShutdownHook(out);
+            Runtime.getRuntime().addShutdownHook(myShutdownHook);
 
         } catch (IOException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         Distribut distribut = new Distribut(this.socket);
         distribut.setDaemon(true);
         distribut.start();
         this.distribut = distribut;
         Thread.currentThread().getThreadGroup();
-
-
-//        final Thread thread = new Thread(new Runnable() {
-//            public void run() {
-//                    Platform.runLater(distribut);
-//
-//                    if(currentThread.isInterrupted()){
-//                        distribut.interrupt();
-//                    }
-//            }
-//        });
-//        thread.start();
 
     }
 
