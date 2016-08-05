@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -41,16 +42,23 @@ public class Duel implements Doer {
                     Controller.setNowStep(false);
                 }
                 if(ControllerLobby.getDialog()!=null)
-                ((Stage) ControllerLobby.getDialog().getScene().getWindow()).close();
+                    ((Stage) ControllerLobby.getDialog().getScene().getWindow()).close();
                 try {
-                    Stage stageTheLabelBelongs = (Stage) label.getScene().getWindow();
-                    Parent root = FXMLLoader.load(getClass().getResource("/xml/sample.fxml"));
+                    Stage stage = new Stage();
+                    Parent root = null;
+                    root = FXMLLoader.load(getClass().getResource("/xml/sample.fxml"));
                     Scene scene = new Scene(root);
                     scene.getStylesheets().add(0, "style.css");
-                    stageTheLabelBelongs.setScene(scene);
+                    stage.setScene(scene);
+                    stage.setTitle("Крутые шахматы");
+                    Stage stageTheLabelBelongs = (Stage) label.getScene().getWindow();
+                    stageTheLabelBelongs.close();
+                    stage.show();
+
                 } catch (Exception e){
 
                 }
+
             }
         });
     }

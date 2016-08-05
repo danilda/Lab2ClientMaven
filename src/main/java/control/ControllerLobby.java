@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,24 +13,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.Send;
 import model.worker.CheckDuel;
 import model.worker.Duel;
+import model.worker.Message;
+import model.worker.QueryUser;
+import view.PaneForList;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static java.util.Objects.isNull;
 
 /**
  * Created by User on 12.07.2016.
  */
-public class ControllerLobby{
+public class ControllerLobby implements Chat {
     private String currentItem = null;
     private static String myName;
     private static String myGame;
@@ -40,10 +46,10 @@ public class ControllerLobby{
     private static String opWins;
     private static String opLoses;
     private static String opStatus;
-    private static boolean switcher;
     private static Labeled dialog;
     private static Window node;
     public static ObservableList<String> itemsList = FXCollections.observableArrayList();
+    private ObservableList<Pane> chatList = FXCollections.observableArrayList ( );
     private String color;
 
     @FXML
@@ -66,7 +72,10 @@ public class ControllerLobby{
     private Label myDrawsL;
     @FXML
     private ChoiceBox<String> colorChoice;
-
+    @FXML
+    private ListView<Pane> chat;
+    @FXML
+    private TextArea textMessage;
     @FXML
     private ListView<String> list;
 
@@ -118,14 +127,6 @@ public class ControllerLobby{
 
     public static void setOpWins(String opWins) {
         ControllerLobby.opWins = opWins;
-    }
-
-    public static boolean isSwitcher() {
-        return switcher;
-    }
-
-    public static void setSwitcher(boolean switcher) {
-        ControllerLobby.switcher = switcher;
     }
 
     public static String getOpStatus() {
@@ -247,6 +248,8 @@ public class ControllerLobby{
                 ControllerCheck.setColor(color);
             }
         });
+        QueryUser.setController(this);
+        Message.setController(this);
     }
 
     public void duelButton(ActionEvent actionEvent) throws IOException {
@@ -268,20 +271,31 @@ public class ControllerLobby{
         }
     }
 
-    public void onClickList(){
-        while (true){
-            System.out.println(opName + " " + opGame + " " + opWins + " " + opStatus);
-            if(switcher){
-                opNameL.setText(opName);
-                opGameL.setText(opGame);
-                opWinsL.setText(opWins);
-                opDrawsL.setText(Integer.toString(Integer.parseInt(opGame) - Integer.parseInt(opWins) - Integer.parseInt(opLoses)) );
-                opStatusL.setText(opStatus);
-                switcher = false;
-                break;
-            }
+    public void onRefreshList(){
+        opNameL.setText(opName);
+        opGameL.setText(opGame);
+        opWinsL.setText(opWins);
+        opDrawsL.setText(Integer.toString(Integer.parseInt(opGame) -
+                Integer.parseInt(opWins) - Integer.parseInt(opLoses)));
+        if(opStatus.equals("true")){
+            opStatusL.setText("Играет");
+        } else {
+            opStatusL.setText("Свободен");
         }
     }
 
 
+    public void sendMessage(){
+        chatList.add(new PaneForList("вы", textMessage.getText()).returnObject());
+        chat.setItems(chatList);
+        chat.scrollTo(chatList.size()-1);
+        Send.sendMessage(textMessage.getText());
+        textMessage.setText("");
+
+    }
+
+    public void refreshMessages(String name, String text){
+        chatList.add(new PaneForList(name, text).returnObject());
+        chat.setItems(chatList);
+    }
 }

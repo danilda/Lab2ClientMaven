@@ -1,6 +1,8 @@
 package model.worker;
 
+import control.Controller;
 import control.ControllerLobby;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 
@@ -8,6 +10,11 @@ import java.util.ArrayList;
  * Created by User on 21.07.2016.
  */
 public class QueryUser implements Doer {
+    private static ControllerLobby controller;
+
+    public static void setController(ControllerLobby controller) {
+        QueryUser.controller = controller;
+    }
 
     @Override
     public void doAction(ArrayList parameters) {
@@ -17,7 +24,12 @@ public class QueryUser implements Doer {
         ControllerLobby.setOpWins((String)parameters.get(3));
         ControllerLobby.setOpLoses((String)parameters.get(4));
         ControllerLobby.setOpStatus((String)parameters.get(5));
-        ControllerLobby.setSwitcher(true);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.onRefreshList();
+            }
+        });
     }
 
 }

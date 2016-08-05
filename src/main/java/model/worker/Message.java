@@ -1,5 +1,6 @@
 package model.worker;
 
+import control.Chat;
 import control.Controller;
 import javafx.application.Platform;
 
@@ -9,9 +10,9 @@ import java.util.ArrayList;
  * Created by User on 01.08.2016.
  */
 public class Message implements Doer {
-    private static Controller controller;
+    private static Chat controller;
 
-    public static void setController(Controller controller) {
+    public static void setController(Chat controller) {
         Message.controller = controller;
     }
 

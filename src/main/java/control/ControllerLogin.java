@@ -85,14 +85,20 @@ public class ControllerLogin{
     }
 
     public void nextStage(){
-        Stage stageTheLabelBelongs = (Stage) button.getScene().getWindow();
-        Parent root = null;
         try {
+            Stage stage = new Stage();
+            Parent root = null;
             root = FXMLLoader.load(getClass().getResource("/xml/lobby.fxml"));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(0, "style.css");
+            stage.setScene(scene);
+            stage.setTitle("Крутые шахматы");
+            stage.show();
+            ((Stage) button.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        stageTheLabelBelongs.setScene(new Scene(root));
+
     }
     public static byte getCheck() {
         return check;

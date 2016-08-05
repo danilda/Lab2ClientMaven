@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import static java.util.Objects.isNull;
 
-public class Controller {
+public class Controller implements Chat {
 
     @FXML
     private ListView<Pane> chat;
@@ -392,7 +392,7 @@ public class Controller {
                         Parent root = null;
                         try {
                             root = FXMLLoader.load(getClass().getResource("/xml/gameWin.fxml"));
-                            stage.setTitle("Hello World");
+                            stage.setTitle("Крутые Шахматы");
                             stage.setResizable(false);
                             stage.setScene(new Scene(root));
                             stage.initModality(Modality.WINDOW_MODAL);
@@ -410,7 +410,7 @@ public class Controller {
                         Parent root = null;
                         try {
                             root = FXMLLoader.load(getClass().getResource("/xml/gamePad.fxml"));
-                            stage.setTitle("Hello World");
+                            stage.setTitle("Крутые Шахматы");
                             stage.setResizable(false);
                             stage.setScene(new Scene(root));
                             stage.initModality(Modality.WINDOW_MODAL);
@@ -453,7 +453,7 @@ public class Controller {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/xml/lobbyWait.fxml"));
-            stage.setTitle("Hello World");
+            stage.setTitle("Крутые Шахматы");
             stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
@@ -466,24 +466,34 @@ public class Controller {
 
     public void buttonLoseAction(){
         if(end){
-            Stage stageTheLabelBelongs = (Stage) buttonLose.getScene().getWindow();
-            Parent root = null;
             try {
+                Stage stage = new Stage();
+                Parent root = null;
                 root = FXMLLoader.load(getClass().getResource("/xml/lobby.fxml"));
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(0, "style.css");
+                stage.setScene(scene);
+                stage.setTitle("Крутые шахматы");
+                ((Stage) chat.getScene().getWindow()).close();
+                stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            stageTheLabelBelongs.setScene(new Scene(root));
         } else {
             Send.sendPass();
-            Stage stageTheLabelBelongs = (Stage) buttonLose.getScene().getWindow();
-            Parent root = null;
             try {
+                Stage stage = new Stage();
+                Parent root = null;
                 root = FXMLLoader.load(getClass().getResource("/xml/lobby.fxml"));
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(0, "style.css");
+                stage.setScene(scene);
+                stage.setTitle("Крутые шахматы");
+                ((Stage) chat.getScene().getWindow()).close();
+                stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            stageTheLabelBelongs.setScene(new Scene(root));
         }
 
     }
@@ -498,7 +508,6 @@ public class Controller {
     }
 
     public void refreshMessages(String name, String text){
-
         chatList.add(new PaneForList(name, text).returnObject());
         chat.setItems(chatList);
     }

@@ -300,8 +300,8 @@
       </HBox>
       <Button fx:id="buttonDraw" layoutX="627.0" layoutY="591.0" mnemonicParsing="false" onAction="#goDraw" prefHeight="29.0" prefWidth="146.0" text="Предложить ничью" />
       <Button fx:id="buttonLose" layoutX="781.0" layoutY="591.0" mnemonicParsing="false" onAction="#buttonLoseAction" prefHeight="29.0" prefWidth="105.0" text="Сдаться" />
-      <Button layoutX="639.0" layoutY="471.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="29.0" prefWidth="240.0" text="Button" />
-      <ListView fx:id="chat" layoutX="638.0" layoutY="65.0" prefHeight="336.0" prefWidth="240.0" styleClass="list-cell" />
+      <Button layoutX="639.0" layoutY="471.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="29.0" prefWidth="240.0" text="Отправить" />
+      <ListView id="chat" fx:id="chat" layoutX="638.0" layoutY="65.0" prefHeight="336.0" prefWidth="240.0" />
       <TextArea fx:id="textMessage" layoutX="638.0" layoutY="401.0" prefHeight="62.0" prefWidth="240.0" />
    </children>
 </AnchorPane>

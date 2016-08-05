@@ -29,7 +29,7 @@ public class Main extends Application {
         System.out.println(Thread.currentThread().getThreadGroup());
         final Thread currentThread = Thread.currentThread();
         Parent root = FXMLLoader.load(getClass().getResource("/xml/sampleLogin.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Крутые Шахматы");
         primaryStage.setScene(new Scene(root, 300, 300));
         primaryStage.show();
         try {

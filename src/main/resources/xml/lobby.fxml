@@ -5,119 +5,127 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerLobby">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerLobby">
    <children>
-      <AnchorPane prefHeight="501.0" prefWidth="800.0">
+      <AnchorPane maxWidth="1079.0" minWidth="859.0" prefHeight="500.0" prefWidth="1079.0">
          <children>
-            <ListView fx:id="list" layoutX="14.0" layoutY="60.0" onMouseClicked="#onClickList" prefHeight="407.0" prefWidth="200.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="60.0" />
-            <Label layoutX="14.0" layoutY="22.0" prefHeight="31.0" prefWidth="200.0" text="Список игроков онлайн" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="22.0">
+            <ListView fx:id="list" layoutX="231.0" layoutY="66.0" prefHeight="407.0" prefWidth="200.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="231.0" AnchorPane.topAnchor="66.0" />
+            <Label layoutX="231.0" layoutY="28.0" prefHeight="31.0" prefWidth="200.0" text="Список игроков онлайн" AnchorPane.leftAnchor="231.0" AnchorPane.topAnchor="28.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="305.0" layoutY="425.0" mnemonicParsing="false" onAction="#duelButton" prefHeight="42.0" prefWidth="190.0" text="Вызвать на дуэль" AnchorPane.bottomAnchor="34.0" />
-            <Label layoutX="300.0" layoutY="22.0" prefHeight="31.0" prefWidth="200.0" text="Статистика  противника">
+            <Button layoutX="474.0" layoutY="430.0" mnemonicParsing="false" onAction="#duelButton" prefHeight="42.0" prefWidth="190.0" text="Вызвать на дуэль" AnchorPane.bottomAnchor="28.0" />
+            <Label layoutX="469.0" layoutY="28.0" prefHeight="31.0" prefWidth="200.0" text="Статистика  противника">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="287.0" layoutY="66.0" prefHeight="31.0" prefWidth="113.0" text="Ник">
+            <Label layoutX="456.0" layoutY="72.0" prefHeight="31.0" prefWidth="113.0" text="Ник">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="opNameL" layoutX="400.0" layoutY="66.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="opNameL" layoutX="569.0" layoutY="72.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="287.0" layoutY="97.0" prefHeight="31.0" prefWidth="113.0" text="Сыграно">
+            <Label layoutX="456.0" layoutY="103.0" prefHeight="31.0" prefWidth="113.0" text="Сыграно">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="opGameL" layoutX="400.0" layoutY="97.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="opGameL" layoutX="569.0" layoutY="103.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="287.0" layoutY="128.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
+            <Label layoutX="456.0" layoutY="134.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="opWinsL" layoutX="400.0" layoutY="128.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="opWinsL" layoutX="569.0" layoutY="134.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="287.0" layoutY="193.0" prefHeight="31.0" prefWidth="113.0" text="Статус">
+            <Label layoutX="456.0" layoutY="199.0" prefHeight="31.0" prefWidth="113.0" text="Статус">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="opStatusL" layoutX="400.0" layoutY="193.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="opStatusL" layoutX="569.0" layoutY="199.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="585.0" layoutY="22.0" prefHeight="31.0" prefWidth="143.0" text="Своя статистика">
+            <Label layoutX="754.0" layoutY="28.0" prefHeight="31.0" prefWidth="143.0" text="Своя статистика">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="543.0" layoutY="66.0" prefHeight="31.0" prefWidth="113.0" text="Ник">
+            <Label layoutX="712.0" layoutY="72.0" prefHeight="31.0" prefWidth="113.0" text="Ник">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="543.0" layoutY="97.0" prefHeight="31.0" prefWidth="113.0" text="Сыграно">
+            <Label layoutX="712.0" layoutY="103.0" prefHeight="31.0" prefWidth="113.0" text="Сыграно">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="543.0" layoutY="128.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
+            <Label layoutX="712.0" layoutY="134.0" prefHeight="31.0" prefWidth="113.0" text="Побед">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="myNameL" layoutX="643.0" layoutY="66.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="myNameL" layoutX="812.0" layoutY="72.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="myGameL" layoutX="643.0" layoutY="97.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="myGameL" layoutX="812.0" layoutY="103.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="myWinsL" layoutX="643.0" layoutY="128.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="myWinsL" layoutX="812.0" layoutY="134.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="colorChoice" layoutX="543.0" layoutY="264.0" prefHeight="29.0" prefWidth="230.0" />
-            <Label layoutX="586.0" layoutY="224.0" text="Приоритет цвета">
+            <ChoiceBox fx:id="colorChoice" layoutX="712.0" layoutY="270.0" prefHeight="29.0" prefWidth="230.0" />
+            <Label layoutX="755.0" layoutY="230.0" text="Приоритет цвета">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="287.0" layoutY="159.0" prefHeight="31.0" prefWidth="113.0" text="Ничей">
+            <Label layoutX="456.0" layoutY="165.0" prefHeight="31.0" prefWidth="113.0" text="Ничей">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="opDrawsL" layoutX="400.0" layoutY="159.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="opDrawsL" layoutX="569.0" layoutY="165.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="543.0" layoutY="159.0" prefHeight="31.0" prefWidth="113.0" text="Ничей">
+            <Label layoutX="712.0" layoutY="165.0" prefHeight="31.0" prefWidth="113.0" text="Ничей">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="myDrawsL" layoutX="643.0" layoutY="159.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="myDrawsL" layoutX="812.0" layoutY="165.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView id="chat" fx:id="chat" layoutX="14.0" layoutY="67.0" prefHeight="277.0" prefWidth="200.0" />
+            <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="29.0" prefWidth="200.0" text="Отправить" />
+            <TextArea fx:id="textMessage" layoutX="14.0" layoutY="344.0" prefHeight="92.0" prefWidth="200.0" />
+            <Label layoutX="99.0" layoutY="28.0" prefHeight="31.0" prefWidth="30.0" text="Чат">
                <font>
                   <Font size="18.0" />
                </font>
