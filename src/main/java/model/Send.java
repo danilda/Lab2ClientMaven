@@ -163,4 +163,14 @@ public class Send extends Thread{
         Main.send(result);
     }
 
+    public static void sendUserInfo() {
+        String result;
+        result = "<body>\n" +
+                " <metaInfo>UserInfo</metaInfo>\n" +
+                "</body>";
+        Main.send(result);
+    }
+
+
+
 }

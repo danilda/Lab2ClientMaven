@@ -3,9 +3,11 @@ package control;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Send;
+import model.worker.CreateNewUser;
 
 public class ControllerEdit {
 
@@ -18,36 +20,36 @@ public class ControllerEdit {
     @FXML
     TextField regPassCheck;
 
-    private static byte check;
 
     @FXML
     private void initialize() {
-        check = 0;
+        CreateNewUser.setController(this);
     }
 
     public void endRegistration(ActionEvent actionEvent){
-        if(regPass.getText().equals(regPassCheck.getText())){
+        if(!regLogin.getText().equals("") && !regPass.getText().equals("")
+                && regPass.getText().equals(regPassCheck.getText())){
             Send.sendQueryRegistration(regLogin.getText(), regPass.getText());
-        }
-
-        while (true){
-            System.out.println(check);
-            if(check == 1){
-                ((Stage) regPassCheck.getScene().getWindow()).close();
-                break;
-            }
-            if(check == -1){
-                // в случае плохого рега
-                break;
-            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText(null);
+            System.out.println("Ошибка");
+            alert.setContentText("Ошибка ввода полей.");
+            alert.showAndWait();
         }
     }
 
-    public static byte getCheck() {
-        return check;
-    }
-
-    public static void setCheck(byte check) {
-        ControllerEdit.check = check;
+    public void checkCreate(boolean info){
+        if(info){
+            ((Stage) regPassCheck.getScene().getWindow()).close();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText(null);
+            System.out.println("Ошибка");
+            alert.setContentText("Пользователь с данным логином уже существует.");
+            alert.showAndWait();
+        }
     }
 }

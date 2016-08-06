@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -13,13 +14,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
+import model.worker.CheckInitialize;
 
 
 import java.io.IOException;
 
 public class ControllerLogin{
-
-
 
     @FXML
     VBox vBox;
@@ -33,37 +33,18 @@ public class ControllerLogin{
     @FXML
     Button button;
 
-    private static byte check;
 
 
     @FXML
     private void initialize() {
-        check = 0;
+        CheckInitialize.setController(this);
     }
 
-
-    /**
-     * Now we don't say about protocol.
-     * That is why "Send.send...()" is commented.
-     * When we speak about this, i change this method.
-     * Actually I will commend source between "start" and "end".
-     * And discommend "Send.send...()"
-     * @throws IOException
-     */
     public void onClick(ActionEvent actionEvent) throws IOException {
-        Send.sendQueryAboutIntlz(textLogin.getText(), textPass.getText());
-        while (true){
-            System.out.println("Check = " + check);
-            if(ControllerLogin.check == 1){
-                System.out.println("Check = " + check);
-                nextStage();
-                break;
-            }
-            if(ControllerLogin.check == -1){
-                // в случае плохого входа
-                break;
-            }
-        }
+        if(textLogin.getText() != null && !textLogin.getText().equals("")
+                && textPass.getText() != null && !textPass.getText().equals(""))
+            Send.sendQueryAboutIntlz(textLogin.getText(), textPass.getText());
+
     }
 
     public void onClickDialog(ActionEvent actionEvent) throws Exception {
@@ -100,12 +81,19 @@ public class ControllerLogin{
         }
 
     }
-    public static byte getCheck() {
-        return check;
+
+    public void checkInit(boolean info){
+        if(info){
+            nextStage();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText(null);
+            System.out.println("Ошибка");
+            alert.setContentText("Неверный логин или пароль!");
+            alert.showAndWait();
+        }
     }
 
-    public static void setCheck(byte check) {
-        ControllerLogin.check = check;
-    }
 
 }

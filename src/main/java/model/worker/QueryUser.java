@@ -19,15 +19,15 @@ public class QueryUser implements Doer {
     @Override
     public void doAction(ArrayList parameters) {
         System.out.println(parameters.toString());
-        ControllerLobby.setOpName((String)parameters.get(1));
-        ControllerLobby.setOpGame((String)parameters.get(2));
-        ControllerLobby.setOpWins((String)parameters.get(3));
-        ControllerLobby.setOpLoses((String)parameters.get(4));
-        ControllerLobby.setOpStatus((String)parameters.get(5));
+        String name = (String)parameters.get(1);
+        String game = (String)parameters.get(2);
+        String wins = (String)parameters.get(3);
+        String loses = (String)parameters.get(4);
+        String status = (String)parameters.get(5);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                controller.onRefreshList();
+                controller.onRefreshList(name, game, wins, loses, status);
             }
         });
     }

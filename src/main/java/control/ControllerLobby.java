@@ -19,10 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.Send;
-import model.worker.CheckDuel;
-import model.worker.Duel;
-import model.worker.Message;
-import model.worker.QueryUser;
+import model.worker.*;
 import view.PaneForList;
 
 import java.awt.event.ItemEvent;
@@ -37,15 +34,6 @@ import static java.util.Objects.isNull;
  */
 public class ControllerLobby implements Chat {
     private String currentItem = null;
-    private static String myName;
-    private static String myGame;
-    private static String myWins;
-    private static String myLoses;
-    private static String opName;
-    private static String opGame;
-    private static String opWins;
-    private static String opLoses;
-    private static String opStatus;
     private static Labeled dialog;
     private static Window node;
     public static ObservableList<String> itemsList = FXCollections.observableArrayList();
@@ -63,6 +51,8 @@ public class ControllerLobby implements Chat {
     @FXML
     private Label opDrawsL;
     @FXML
+    private Label opLoseL;
+    @FXML
     private Label myNameL;
     @FXML
     private Label myGameL;
@@ -70,6 +60,8 @@ public class ControllerLobby implements Chat {
     private Label myWinsL;
     @FXML
     private Label myDrawsL;
+    @FXML
+    private Label myLoseL;
     @FXML
     private ChoiceBox<String> colorChoice;
     @FXML
@@ -81,61 +73,6 @@ public class ControllerLobby implements Chat {
 
     private static Thread thread;
 
-    public static String getMyName() {
-        return myName;
-    }
-
-    public static void setMyName(String myName) {
-        ControllerLobby.myName = myName;
-    }
-
-    public static String getMyGame() {
-        return myGame;
-    }
-
-    public static void setMyGame(String myGame) {
-        ControllerLobby.myGame = myGame;
-    }
-
-    public static String getMyWins() {
-        return myWins;
-    }
-
-    public static void setMyWins(String myWins) {
-        ControllerLobby.myWins = myWins;
-    }
-
-    public static String getOpName() {
-        return opName;
-    }
-
-    public static void setOpName(String opName) {
-        ControllerLobby.opName = opName;
-    }
-
-    public static String getOpGame() {
-        return opGame;
-    }
-
-    public static void setOpGame(String opGame) {
-        ControllerLobby.opGame = opGame;
-    }
-
-    public static String getOpWins() {
-        return opWins;
-    }
-
-    public static void setOpWins(String opWins) {
-        ControllerLobby.opWins = opWins;
-    }
-
-    public static String getOpStatus() {
-        return opStatus;
-    }
-
-    public static void setOpStatus(String opStatus) {
-        ControllerLobby.opStatus = opStatus;
-    }
 
     public static Window getNode() {
         return node;
@@ -183,24 +120,10 @@ public class ControllerLobby implements Chat {
         itemsList = FXCollections.observableArrayList (lobby);
     }
 
-    public static String getMyLoses() {
-        return myLoses;
-    }
-
-    public static void setMyLoses(String myLoses) {
-        ControllerLobby.myLoses = myLoses;
-    }
-
-    public static String getOpLoses() {
-        return opLoses;
-    }
-
-    public static void setOpLoses(String opLoses) {
-        ControllerLobby.opLoses = opLoses;
-    }
 
     @FXML
     private void initialize() {
+        UserInfo.setControllerLobby(this);
         ObservableList<String> items = FXCollections.observableArrayList ( );
         list.setItems(items);
         thread = new Thread(new Runnable() {
@@ -220,13 +143,10 @@ public class ControllerLobby implements Chat {
                 }
             }
         });
+        Send.sendUserInfo();
         thread.setDaemon(true);// <---
         thread.start();
-        myNameL.setText(myName);
-        myGameL.setText(myGame);
-        myWinsL.setText(myWins);
         CheckDuel.setLabel(myGameL);
-        myDrawsL.setText(Integer.toString(Integer.parseInt(myGame) - Integer.parseInt(myWins) - Integer.parseInt(myLoses)) );
         color = "random";
         ObservableList<String> itemsForChoice = FXCollections.observableArrayList ( "Белый", "Черный", "Не важно");
         Duel.setLabel(myGameL);
@@ -234,15 +154,15 @@ public class ControllerLobby implements Chat {
         colorChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                int tmpcolor = (int) newValue;
-                System.out.println(tmpcolor);
-                if (tmpcolor == 0) {
+                int tmpColor = (int) newValue;
+                System.out.println(tmpColor);
+                if (tmpColor == 0) {
                     color = "white";
                 }
-                if (tmpcolor == 1) {
+                if (tmpColor == 1) {
                     color = "black";
                 }
-                if (tmpcolor == 2) {
+                if (tmpColor == 2) {
                     color = "random";
                 }
                 ControllerCheck.setColor(color);
@@ -254,27 +174,37 @@ public class ControllerLobby implements Chat {
 
     public void duelButton(ActionEvent actionEvent) throws IOException {
         String selectedItem = list.getSelectionModel().getSelectedItem();
-        System.out.println(selectedItem.toString() + " --- выбраный противник");
-        Send.sendQueryDuel(selectedItem.toString(), color);
-        try{
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/xml/lobbyWait.fxml"));
-            stage.setTitle("Hello World");
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(myWinsL.getScene().getWindow());
-            stage.show();
-        }
-        catch (Exception e){
-            e.getStackTrace();
+        if(!isNull(selectedItem)) {
+            System.out.println(selectedItem.toString() + " --- выбраный противник");
+            Send.sendQueryDuel(selectedItem.toString(), color);
+            try {
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/xml/lobbyWait.fxml"));
+                stage.setTitle("Hello World");
+                stage.setResizable(false);
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(myWinsL.getScene().getWindow());
+                stage.show();
+            } catch (Exception e) {
+                e.getStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Внимание!");
+            alert.setHeaderText(null);
+            System.out.println("Ошибка");
+            alert.setContentText("Выберите противника в списке!");
+            alert.showAndWait();
         }
     }
 
-    public void onRefreshList(){
+    public void onRefreshList(String opName, String opGame,
+                              String opWins, String opLoses, String opStatus){
         opNameL.setText(opName);
         opGameL.setText(opGame);
         opWinsL.setText(opWins);
+        opWinsL.setText(opLoses);
         opDrawsL.setText(Integer.toString(Integer.parseInt(opGame) -
                 Integer.parseInt(opWins) - Integer.parseInt(opLoses)));
         if(opStatus.equals("true")){
@@ -282,6 +212,16 @@ public class ControllerLobby implements Chat {
         } else {
             opStatusL.setText("Свободен");
         }
+    }
+
+    public void onRefreshMyInfo(String myName, String myGame,
+                              String myWins, String myLoses){
+        myNameL.setText(myName);
+        myGameL.setText(myGame);
+        myWinsL.setText(myLoses);
+        myLoseL.setText(myWins);
+        myDrawsL.setText(Integer.toString(Integer.parseInt(myGame) -
+                Integer.parseInt(myWins) - Integer.parseInt(myLoses)));
     }
 
 

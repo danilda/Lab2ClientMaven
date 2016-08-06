@@ -51,12 +51,12 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="456.0" layoutY="199.0" prefHeight="31.0" prefWidth="113.0" text="Статус">
+            <Label layoutX="456.0" layoutY="228.0" prefHeight="31.0" prefWidth="113.0" text="Статус">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="opStatusL" layoutX="569.0" layoutY="199.0" prefHeight="31.0" prefWidth="143.0">
+            <Label fx:id="opStatusL" layoutX="569.0" layoutY="228.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -96,8 +96,8 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="colorChoice" layoutX="712.0" layoutY="270.0" prefHeight="29.0" prefWidth="230.0" />
-            <Label layoutX="755.0" layoutY="230.0" text="Приоритет цвета">
+            <ChoiceBox fx:id="colorChoice" layoutX="710.0" layoutY="309.0" prefHeight="29.0" prefWidth="230.0" />
+            <Label layoutX="753.0" layoutY="269.0" text="Приоритет цвета">
                <font>
                   <Font size="18.0" />
                </font>
@@ -126,6 +126,26 @@
             <Button layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="29.0" prefWidth="200.0" text="Отправить" />
             <TextArea fx:id="textMessage" layoutX="14.0" layoutY="344.0" prefHeight="92.0" prefWidth="200.0" />
             <Label layoutX="99.0" layoutY="28.0" prefHeight="31.0" prefWidth="30.0" text="Чат">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="456.0" layoutY="196.0" prefHeight="31.0" prefWidth="113.0" text="Поражений">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="opLoseL" layoutX="569.0" layoutY="196.0" prefHeight="31.0" prefWidth="143.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="712.0" layoutY="196.0" prefHeight="31.0" prefWidth="113.0" text="Поражений">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="myLoseL" layoutX="812.0" layoutY="196.0" prefHeight="31.0" prefWidth="143.0">
                <font>
                   <Font size="18.0" />
                </font>
