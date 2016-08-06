@@ -218,8 +218,8 @@ public class ControllerLobby implements Chat {
                               String myWins, String myLoses){
         myNameL.setText(myName);
         myGameL.setText(myGame);
-        myWinsL.setText(myLoses);
-        myLoseL.setText(myWins);
+        myWinsL.setText(myWins);
+        myLoseL.setText(myLoses);
         myDrawsL.setText(Integer.toString(Integer.parseInt(myGame) -
                 Integer.parseInt(myWins) - Integer.parseInt(myLoses)));
     }

@@ -385,14 +385,28 @@ public class ChessLogik {
     }
 
     private static boolean checkOnShah(Box[][] matrix, int kingI, int kingY){
-        Box[][] tmpMatrix = matrix;
+        Box[][] tmpMatrix = swichMatrix(matrix);
         boolean white = !matrix[kingI][kingY].white;
+        for(int i = 0; i < 8; i++)
+            for(int y = 0; y < 8; y++){
+                int tmp = 0;
+                if(!white)
+                    tmp = 1;
+                if ((i+y + tmp) % 2 == 0) {
+                    tmpMatrix[i][y].pane.setStyle("-fx-background-color: #ffffe7;");
+                } else {
+                    tmpMatrix[i][y].pane.setStyle("-fx-background-color: #e6a875;");
+                }
+            }
         for(int i = 0 ; i < 8; i++)
             for(int y = 0 ; y < 8; y++){
                 if(tmpMatrix[i][y].name != null && tmpMatrix[i][y].white == white){
                     run(tmpMatrix[i][y], tmpMatrix, i, y, false);
-                    if(tmpMatrix[kingI][kingY].pane.getStyle().split(" ")[1].equals("#ff8584;"))
+                    if(tmpMatrix[kingI][kingY].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
+                        System.out.println(kingI + "" +kingY +" <--- король");
+                        System.out.println(i  + "" + y +" <--- фигур, которая ставит шах");
                         return true;
+                    }
                 }
             }
         return false;
@@ -477,6 +491,7 @@ public class ChessLogik {
                     int tmp = findKing(Controller.isWhite(), tmpMatrix);
                     int kingI = tmp/10;
                     int kingY = tmp%10;
+                    System.out.println(tmp + "  " + k + s);
                     if(checkOnShah(tmpMatrix, kingI, kingY )){
                         if ((k+s) % 2 == 0) {
                             matrixPr[k][s].pane.setStyle("-fx-background-color: #ffffe7;");
