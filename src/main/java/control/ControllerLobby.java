@@ -204,7 +204,7 @@ public class ControllerLobby implements Chat {
         opNameL.setText(opName);
         opGameL.setText(opGame);
         opWinsL.setText(opWins);
-        opWinsL.setText(opLoses);
+        opLoseL.setText(opLoses);
         opDrawsL.setText(Integer.toString(Integer.parseInt(opGame) -
                 Integer.parseInt(opWins) - Integer.parseInt(opLoses)));
         if(opStatus.equals("true")){
