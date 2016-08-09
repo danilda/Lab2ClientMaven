@@ -34,7 +34,8 @@ public class Pad implements Doer {
                 Stage stage = new Stage();
                 Parent root = null;
                 try {
-                    root = FXMLLoader.load(getClass().getResource("/xml/gameWin.fxml"));
+                    ControllerMate.setInvisibility(true);
+                    root = FXMLLoader.load(getClass().getResource("/xml/gamePad.fxml"));
                     stage.setTitle("Hello World");
                     stage.setResizable(false);
                     stage.setScene(new Scene(root));

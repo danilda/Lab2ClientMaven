@@ -350,8 +350,7 @@ public class Controller implements Chat {
                         }
                     }
                 if (thisBox.white == this.white && thisBox.name != null) {
-                    ChessLogik.run(thisBox, matrix, nowI, nowY, true);
-                    ChessLogik.checkOnStep(matrix, nowI, nowY);
+                    ChessLogik.checkOnStep(matrix, nowI, nowY, true);
                     nowBox = thisBox;
                 }
 
@@ -365,7 +364,7 @@ public class Controller implements Chat {
                     changedBox.image.setImage(nowBox.image.getImage());
                     changedBox.name = nowBox.name;
                     changedBox.white = nowBox.white;
-                    System.out.println("Мат -------->" + ChessLogik.checkOnMate(matrix));
+//                    System.out.println("Мат -------->" + ChessLogik.checkOnMate(matrix));
                     Send.sendStep(findIndex(matrix, nowBox), findIndex(matrix, thisBox) );
                     if(findIndex(matrix, thisBox)<10 && (thisBox.name.equals("pawn")
                             || thisBox.name.equals("pawnWhite"))){
@@ -384,6 +383,23 @@ public class Controller implements Chat {
                             e.printStackTrace();
                         }
                     }
+                    for (int i = 0; i < 8; i++)
+                        for (int y = 0; y < 8; y++) {
+                            if (matrix[i][y].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
+                                    matrix[i][y].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
+                                int tmp = 0;
+                                if(white)
+                                    tmp = 1;
+                                if ((i+y + tmp) % 2 == 0) {
+                                    matrix[i][y].pane.setStyle("-fx-background-color: #ffffe7;");
+                                } else {
+                                    matrix[i][y].pane.setStyle("-fx-background-color: #e6a875;");
+                                }
+                            }
+                        }
+                    nowBox.image.setImage(null);
+                    nowBox.name = null;
+                    nowBox.white = false;
                     if(ChessLogik.checkOnMate(matrix)) {
                         buttonLose.setText("Закрыть");
                         Send.sendMate();
@@ -391,6 +407,7 @@ public class Controller implements Chat {
                         Stage stage = new Stage();
                         Parent root = null;
                         try {
+                            ControllerMate.setInvisibility(true);
                             root = FXMLLoader.load(getClass().getResource("/xml/gameWin.fxml"));
                             stage.setTitle("Крутые Шахматы");
                             stage.setResizable(false);
@@ -409,6 +426,7 @@ public class Controller implements Chat {
                         Stage stage = new Stage();
                         Parent root = null;
                         try {
+                            ControllerMate.setInvisibility(true);
                             root = FXMLLoader.load(getClass().getResource("/xml/gamePad.fxml"));
                             stage.setTitle("Крутые Шахматы");
                             stage.setResizable(false);
@@ -421,26 +439,11 @@ public class Controller implements Chat {
                         }
                         ControllerMate.setInvisibility(true);
                     }
-                    nowBox.image.setImage(null);
-                    nowBox.name = null;
-                    nowBox.white = false;
+
                     nowBox = null;
                     DoStep.setMatrix(matrix);
                     nowStep = false;
-                    for (int i = 0; i < 8; i++)
-                        for (int y = 0; y < 8; y++) {
-                            if (matrix[i][y].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
-                                    matrix[i][y].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
-                                int tmp = 0;
-                                if(white)
-                                    tmp = 1;
-                                if ((i+y + tmp) % 2 == 0) {
-                                    matrix[i][y].pane.setStyle("-fx-background-color: #ffffe7;");
-                                } else {
-                                    matrix[i][y].pane.setStyle("-fx-background-color: #e6a875;");
-                                }
-                            }
-                        }
+
                 }
             }
 
@@ -510,6 +513,20 @@ public class Controller implements Chat {
     public void refreshMessages(String name, String text){
         chatList.add(new PaneForList(name, text).returnObject());
         chat.setItems(chatList);
+    }
+
+    private static Box[][] swichMatrix(Box[][] matrixPr){
+        Box[][] tmpMatrix = new Box[8][8];
+        for(int i = 0 ; i < 8; i++) {
+            for (int y = 0; y < 8; y++) {
+                tmpMatrix[i][y] = new Box(new Pane(new ImageView()));
+                tmpMatrix[i][y].pane.setStyle(matrixPr[i][y].pane.getStyle());
+                tmpMatrix[i][y].white = matrixPr[i][y].white;
+                tmpMatrix[i][y].name = matrixPr[i][y].name;
+                tmpMatrix[i][y].image.setImage(matrixPr[i][y].image.getImage());
+            }
+        }
+        return tmpMatrix;
     }
 
 }

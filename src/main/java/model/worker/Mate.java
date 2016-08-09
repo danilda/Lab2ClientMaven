@@ -1,6 +1,7 @@
 package model.worker;
 
 import control.Controller;
+import control.ControllerMate;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,6 +34,7 @@ public class Mate implements Doer {
                 Stage stage = new Stage();
                 Parent root = null;
                 try {
+                    ControllerMate.setInvisibility(true);
                     root = FXMLLoader.load(getClass().getResource("/xml/gameMate.fxml"));
                     stage.setTitle("Hello World");
                     stage.setResizable(false);
