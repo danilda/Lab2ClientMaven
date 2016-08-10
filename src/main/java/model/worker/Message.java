@@ -21,7 +21,7 @@ public class Message implements Doer {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                controller.refreshMessages((String) parameters.get(1), (String) parameters.get(2));
+                controller.refreshMessages(parameters);
             }
         });
     }

@@ -2,6 +2,7 @@ package control;
 
 
 import javafx.application.Platform;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -71,7 +72,7 @@ public class ControllerLobby implements Chat {
     @FXML
     private ListView<String> list;
 
-    private static Thread thread;
+    private static Thread thread;// убрать
 
 
     public static Window getNode() {
@@ -234,8 +235,18 @@ public class ControllerLobby implements Chat {
 
     }
 
-    public void refreshMessages(String name, String text){
-        chatList.add(new PaneForList(name, text).returnObject());
+    public void refreshMessages(ArrayList parameters){
+        if(parameters.get(1).equals("false")){
+            chatList.add(new PaneForList(
+                    (String)parameters.get(2),(String)parameters.get(3)).returnObject());
+        } else {
+            StringBuilder text = new StringBuilder();
+            for(int i = 3; i < parameters.size(); i++){
+                text.append(parameters.get(i)+"\n");
+            }
+            chatList.add(new PaneForList(
+                    (String)parameters.get(2), text.toString()).returnObject());
+        }
         chat.setItems(chatList);
     }
 }

@@ -2,11 +2,6 @@ package model;
 
 import view.Main;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Vector;
-
 /**
  * Created by User on 12.07.2016.
  */
@@ -129,12 +124,27 @@ public class Send extends Thread{
     }
 
     public static void sendMessage(String text){
+        String[] textArr = text.split("\n");
         String result;
-        result = "<body>\n" +
-                " <metaInfo>Message</metaInfo>\n" +
-                " <text>" + text + "</text>\n" +
-                "</body>";
-        Main.send(result);
+        System.out.println(textArr.length);
+        if(textArr.length == 1) {
+            result = "<body>\n" +
+                    " <metaInfo>Message</metaInfo>\n" +
+                    " <transfer>" +  false + "</transfer>\n" +
+                    " <text>" + text + "</text>\n" +
+                    "</body>";
+            Main.send(result);
+        } else {
+            result = "<body>\n" +
+                    " <metaInfo>Message</metaInfo>\n" +
+                    " <transfer>" +  true + "</transfer>\n" +
+                    " <text>" + textArr[0] + "</text>\n";
+            StringBuilder sb = new StringBuilder(result);
+            for(int i = 1; i < textArr.length; i++)
+                sb.append(" <textAdded>" + textArr[i] + "</textAdded>\n" );
+            sb.append("</body>");
+            Main.send(sb.toString());
+        }
     }
 
     public static void sendPad(){
@@ -170,7 +180,5 @@ public class Send extends Thread{
                 "</body>";
         Main.send(result);
     }
-
-
 
 }
