@@ -69,17 +69,11 @@ public class Controller implements Chat {
         Controller.white = white;
     }
 
-    public static boolean isNowStep() {
-        return nowStep;
-    }
 
     public static void setNowStep(boolean nowStep) {
         Controller.nowStep = nowStep;
     }
 
-    public static boolean isEnd() {
-        return end;
-    }
 
     public static void setEnd(boolean end) {
         Controller.end = end;
@@ -87,10 +81,6 @@ public class Controller implements Chat {
 
     public Box[][] getMatrix() {
         return matrix;
-    }
-
-    public void setMatrix(Box[][] matrix) {
-        this.matrix = matrix;
     }
 
     public Image getHorse() {

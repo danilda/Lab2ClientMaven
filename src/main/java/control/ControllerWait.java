@@ -11,7 +11,6 @@ import model.worker.SuccessDraw;
  * Created by User on 22.07.2016.
  */
 public class ControllerWait {
-    private static String currentOponent;
     @FXML
     private Button buttonCancelWait;
 
@@ -26,13 +25,5 @@ public class ControllerWait {
         Send.sendCancelDraw();
         ((Stage) buttonCancelWait.getScene().getWindow()).close();
         ControllerLobby.setDialog(null);
-    }
-
-    public String getCurrentOponent() {
-        return currentOponent;
-    }
-
-    public void setCurrentOponent(String currentOponent) {
-        this.currentOponent = currentOponent;
     }
 }

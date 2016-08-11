@@ -36,7 +36,6 @@ import static java.util.Objects.isNull;
 public class ControllerLobby implements Chat {
     private String currentItem = null;
     private static Labeled dialog;
-    private static Window node;
     public static ObservableList<String> itemsList = FXCollections.observableArrayList();
     private ObservableList<Pane> chatList = FXCollections.observableArrayList ( );
     private String color;
@@ -73,15 +72,6 @@ public class ControllerLobby implements Chat {
     private ListView<String> list;
 
     private static Thread thread;// убрать
-
-
-    public static Window getNode() {
-        return node;
-    }
-
-    public static void setNode(Window node) {
-        ControllerLobby.node = node;
-    }
 
     public static Labeled getDialog() {
         return dialog;
