@@ -1,6 +1,7 @@
 package model.worker;
 
 import control.ControllerLobby;
+import view.Main;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class LobbyInitialize implements Doer {
         for(int i = 1; i < parameters.size(); i++) {
             lobby.add(parameters.get(i));
         }
-        System.out.println("Lobby: " + lobby.toString());
+        Main.getLog().info("Lobby: " + lobby.toString());
         ControllerLobby.setLobby(lobby);
     }
 }

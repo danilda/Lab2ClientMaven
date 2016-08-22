@@ -19,8 +19,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import model.LinksControll;
+import model.Parser;
 import model.Send;
 import model.worker.*;
+import view.Main;
 import view.PaneForList;
 
 import java.awt.event.ItemEvent;
@@ -35,7 +38,6 @@ import static java.util.Objects.isNull;
  */
 public class ControllerLobby implements Chat {
     private String currentItem = null;
-    private static Labeled dialog;
     public static ObservableList<String> itemsList = FXCollections.observableArrayList();
     private ObservableList<Pane> chatList = FXCollections.observableArrayList ( );
     private String color;
@@ -71,23 +73,9 @@ public class ControllerLobby implements Chat {
     @FXML
     private ListView<String> list;
 
-    private static Thread thread;// убрать
+    private Thread thread;
+    private Send send = new Send();
 
-    public static Labeled getDialog() {
-        return dialog;
-    }
-
-    public static void setDialog(Labeled dialog) {
-        ControllerLobby.dialog = dialog;
-    }
-
-    public static Thread getThread() {
-        return thread;
-    }
-
-    public static void setThread(Thread thread) {
-        ControllerLobby.thread = thread;
-    }
 
     public static void lobbyAddName(String name) {
         Platform.runLater(new Runnable() {
@@ -111,10 +99,21 @@ public class ControllerLobby implements Chat {
         itemsList = FXCollections.observableArrayList (lobby);
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public Label getOpWinsL() {
+        return opWinsL;
+    }
+
+    public void setOpWinsL(Label opWinsL) {
+        this.opWinsL = opWinsL;
+    }
 
     @FXML
     private void initialize() {
-        UserInfo.setControllerLobby(this);
+        LinksControll.setControllerLobby(this);
         ObservableList<String> items = FXCollections.observableArrayList ( );
         list.setItems(items);
         thread = new Thread(new Runnable() {
@@ -125,7 +124,7 @@ public class ControllerLobby implements Chat {
                     if(currentItem != null){
                         if(!str.equals(currentItem)){
                             str = currentItem;
-                            Send.sendQueryUser(currentItem);
+                            send.sendQueryUser(currentItem);
                         }
                     }
                     if(!list.getItems().equals(itemsList)) {
@@ -134,13 +133,11 @@ public class ControllerLobby implements Chat {
                 }
             }
         });
-        Send.sendUserInfo();
+        send.sendUserInfo();
         thread.setDaemon(true);// <---
         thread.start();
-        CheckDuel.setLabel(myGameL);
         color = "random";
         ObservableList<String> itemsForChoice = FXCollections.observableArrayList ( "Белый", "Черный", "Не важно");
-        Duel.setLabel(myGameL);
         colorChoice.setItems(itemsForChoice);
         colorChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -156,18 +153,16 @@ public class ControllerLobby implements Chat {
                 if (tmpColor == 2) {
                     color = "random";
                 }
-                ControllerCheck.setColor(color);
             }
         });
-        QueryUser.setController(this);
-        Message.setController(this);
+
     }
 
     public void duelButton(ActionEvent actionEvent) throws IOException {
         String selectedItem = list.getSelectionModel().getSelectedItem();
         if(!isNull(selectedItem)) {
-            System.out.println(selectedItem.toString() + " --- выбраный противник");
-            Send.sendQueryDuel(selectedItem.toString(), color);
+            Main.getLog().info(selectedItem.toString() + " --- выбраный противник");
+            send.sendQueryDuel(selectedItem.toString(), color);
             try {
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/xml/lobbyWait.fxml"));
@@ -178,13 +173,13 @@ public class ControllerLobby implements Chat {
                 stage.initOwner(myWinsL.getScene().getWindow());
                 stage.show();
             } catch (Exception e) {
-                e.getStackTrace();
+                Main.getLog().error(e.getMessage());
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Внимание!");
             alert.setHeaderText(null);
-            System.out.println("Ошибка");
+            Main.getLog().info("Ошибка");
             alert.setContentText("Выберите противника в списке!");
             alert.showAndWait();
         }
@@ -217,12 +212,13 @@ public class ControllerLobby implements Chat {
 
 
     public void sendMessage(){
-        chatList.add(new PaneForList("вы", textMessage.getText()).returnObject());
-        chat.setItems(chatList);
-        chat.scrollTo(chatList.size()-1);
-        Send.sendMessage(textMessage.getText());
-        textMessage.setText("");
-
+        if(textMessage.getText().split("\\s").length > 0 && !textMessage.getText().equals("")) {
+            chatList.add(new PaneForList("вы", textMessage.getText()).returnObject());
+            chat.setItems(chatList);
+            chat.scrollTo(chatList.size() - 1);
+            send.sendMessage(textMessage.getText());
+            textMessage.setText("");
+        }
     }
 
     public void refreshMessages(ArrayList parameters){
@@ -238,5 +234,9 @@ public class ControllerLobby implements Chat {
                     (String)parameters.get(2), text.toString()).returnObject());
         }
         chat.setItems(chatList);
+    }
+    @Override
+    public boolean isLife() {
+        return chat.getScene().getWindow().isShowing();
     }
 }

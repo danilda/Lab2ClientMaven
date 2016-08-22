@@ -1,5 +1,6 @@
 package model.worker;
 
+import control.ControllerDraw;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.LinksControll;
+import view.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,11 +18,8 @@ import java.util.ArrayList;
  * Created by User on 28.07.2016.
  */
 public class CheckDraw implements Doer {
-    private static Button button;
+    private Button button = ((ControllerDraw) LinksControll.getControllers()).getButtonCancelDraw();
 
-    public static void setButton(Button button) {
-        CheckDraw.button = button;
-    }
 
     @Override
     public void doAction(ArrayList parameters) {
@@ -38,7 +38,7 @@ public class CheckDraw implements Doer {
                     stage.initOwner(button.getScene().getWindow());
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Main.getLog().error(e.getMessage());
                 }
             }
         });

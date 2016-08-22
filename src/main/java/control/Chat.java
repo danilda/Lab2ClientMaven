@@ -7,4 +7,5 @@ import java.util.ArrayList;
  */
 public interface Chat {
     void refreshMessages(ArrayList<String> parameters);
+    boolean isLife();
 }

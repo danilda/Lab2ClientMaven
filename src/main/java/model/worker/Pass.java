@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.LinksControll;
+import view.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,11 +19,8 @@ import java.util.ArrayList;
  * Created by User on 29.07.2016.
  */
 public class Pass implements Doer {
-    private static Button button;
-
-    public static void setButton(Button button) {
-        Pass.button = button;
-    }
+    private Controller controller = LinksControll.getControllerChess();
+    private Button button = controller.getButtonLose();
 
     @Override
     public void doAction(ArrayList parameters) {
@@ -30,7 +29,7 @@ public class Pass implements Doer {
             @Override
             public void run() {
                 button.setText("Закрыть");
-                Controller.setEnd(true);
+                controller.setEnd(true);
                 Stage stage = new Stage();
                 Parent root = null;
                 try {
@@ -42,9 +41,8 @@ public class Pass implements Doer {
                     stage.initOwner(button.getScene().getWindow());
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Main.getLog().error(e.getMessage());
                 }
-                ControllerMate.setInvisibility(true);
             }
         });
     }

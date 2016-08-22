@@ -6,8 +6,43 @@ import view.Main;
  * Created by User on 12.07.2016.
  */
 public class Send extends Thread{
+    private static final String returnCancel =  "<body>\n" +
+                                                    " <metaInfo>Cancel</metaInfo>\n" +
+                                                "</body>";
 
-    public static void sendStep(int of, int into) {
+    private static final String returnMate =    "<body>\n" +
+                                                    " <metaInfo>Mate</metaInfo>\n" +
+                                                "</body>";
+
+    private static final String returnDraw =    "<body>\n" +
+                                                    " <metaInfo>Draw</metaInfo>\n" +
+                                                "</body>";
+
+    private static final String returnCancelDraw =    "<body>\n" +
+                                                    " <metaInfo>CancelDraw</metaInfo>\n" +
+                                                "</body>";
+
+    private static final String returnSuccessDraw =    "<body>\n" +
+                                                        " <metaInfo>SuccessDraw</metaInfo>\n" +
+                                                "</body>";
+
+    private static final String returnPass =    "<body>\n" +
+                                                    " <metaInfo>Pass</metaInfo>\n" +
+                                                "</body>";
+
+    private static final String returnPad =     "<body>\n" +
+                                                    " <metaInfo>Pad</metaInfo>\n" +
+                                                "</body>";
+
+    private static final String returnDisconnected ="<body>\n" +
+                                                    " <metaInfo>Disconnected</metaInfo>\n" +
+                                                "</body>";
+
+    private static final String returnUserInfo ="<body>\n" +
+                                                    " <metaInfo>UserInfo</metaInfo>\n" +
+                                                "</body>";
+
+    public void sendStep(int of, int into) {
         String result;
         result = "<body>\n" +
                 "    <metaInfo>DoStep</metaInfo>\n" +
@@ -18,7 +53,7 @@ public class Send extends Thread{
 
     }
 
-    public static void sendQueryAboutIntlz(String login, String pass){
+    public void sendQueryAboutIntlz(String login, String pass){
         String result;
         result = "<body>\n" +
                 "    <metaInfo>CheckInitialize</metaInfo>\n" +
@@ -28,7 +63,7 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-    public static void sendQueryDuel(String nameOpponent , String color){
+    public void sendQueryDuel(String nameOpponent , String color){
         String result;
         result = "<body>\n" +
                 "    <metaInfo>Duel</metaInfo>\n" +
@@ -38,7 +73,7 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-    public static void sendQueryRegistration(String login, String pass){
+    public void sendQueryRegistration(String login, String pass){
         String result;
         result = "<body>\n" +
                 "    <metaInfo>CreateNewUser</metaInfo>\n" +
@@ -48,7 +83,7 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-    public static void sendQueryUser(String nameOpponent){
+    public void sendQueryUser(String nameOpponent){
         String result;
         result = "<body>\n" +
                 "    <metaInfo>QueryUser</metaInfo>\n" +
@@ -57,24 +92,11 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-//    public static void sendQueryLobb(){
-//        String result;
-//        result = "<body>\n" +
-//                " <metaInfo>Lobby</metaInfo>\n" +
-//                "</body>";
-//        Main.send(result);
-//    }
-
-
-    public static void sendCancel(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>Cancel</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendCancel(){
+        Main.send(returnCancel);
     }
 
-    public static void sendSuccess(String color){
+    public void sendSuccess(String color){
         String result;
         result = "<body>\n" +
                 " <metaInfo>SuccessDuel</metaInfo>\n" +
@@ -83,47 +105,27 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-    public static void sendMate(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>Mate</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendMate(){
+        Main.send(returnMate);
     }
 
-    public static void sendQueryDraw(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>Draw</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendQueryDraw(){
+        Main.send(returnDraw);
     }
 
-    public static void sendCancelDraw(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>CancelDraw</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendCancelDraw(){
+        Main.send(returnCancelDraw);
     }
 
-    public static void sendSuccessDraw(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>SuccessDraw</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendSuccessDraw(){
+        Main.send(returnSuccessDraw);
     }
 
-    public static void sendPass(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>Pass</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendPass(){
+        Main.send(returnPass);
     }
 
-    public static void sendMessage(String text){
+    public void sendMessage(String text){
         String[] textArr = text.split("\n");
         String result;
         System.out.println(textArr.length);
@@ -147,23 +149,15 @@ public class Send extends Thread{
         }
     }
 
-    public static void sendPad(){
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>Pad</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendPad(){
+        Main.send(returnPad);
     }
 
-    public static void sendDisconnection() {
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>Disconnected</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendDisconnection() {
+        Main.send(returnDisconnected);
     }
 
-    public static void sendPawnUp(byte position, String name) {
+    public void sendPawnUp(byte position, String name) {
         String result;
         result = "<body>\n" +
                 " <metaInfo>PawnUp</metaInfo>\n" +
@@ -173,12 +167,8 @@ public class Send extends Thread{
         Main.send(result);
     }
 
-    public static void sendUserInfo() {
-        String result;
-        result = "<body>\n" +
-                " <metaInfo>UserInfo</metaInfo>\n" +
-                "</body>";
-        Main.send(result);
+    public void sendUserInfo() {
+        Main.send(returnUserInfo);
     }
 
 }

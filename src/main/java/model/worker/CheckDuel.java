@@ -1,6 +1,8 @@
 package model.worker;
 
+import control.Controller;
 import control.ControllerCheck;
+import control.ControllerLobby;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.LinksControll;
+import view.Main;
 
 import java.util.ArrayList;
 
@@ -15,19 +19,15 @@ import java.util.ArrayList;
  * Created by User on 22.07.2016.
  */
 public class CheckDuel implements Doer {
-    private static Label label;
-
-    public static void setLabel(Label label) {
-        CheckDuel.label = label;
-    }
+    private ControllerLobby controller = LinksControll.getControllerLobby();
 
     @Override
     public void doAction(ArrayList parameters){
-        ControllerCheck.setName((String) parameters.get(1));
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                ControllerCheck.setName((String) parameters.get(1));
                 try{
                     Stage stage = new Stage();
                     Parent root = FXMLLoader.load(getClass().getResource("/xml/lobbyCheck.fxml"));
@@ -35,11 +35,11 @@ public class CheckDuel implements Doer {
                     stage.setResizable(false);
                     stage.setScene(new Scene(root));
                     stage.initModality(Modality.WINDOW_MODAL);
-                    stage.initOwner(label.getScene().getWindow());
+                    stage.initOwner(controller.getOpWinsL().getScene().getWindow());
                     stage.show();
                 }
                 catch (Exception e){
-                    e.getStackTrace();
+                    Main.getLog().error(e.getMessage());
                 }
             }
         });

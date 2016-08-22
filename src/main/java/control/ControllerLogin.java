@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 import model.worker.CheckInitialize;
+import view.Main;
 
 
 import java.io.IOException;
@@ -22,28 +23,30 @@ import java.io.IOException;
 public class ControllerLogin{
 
     @FXML
-    VBox vBox;
+    private VBox vBox;
 
     @FXML
-    TextField textLogin;
+    private TextField textLogin;
 
     @FXML
-    TextField textPass;
+    private TextField textPass;
 
     @FXML
-    Button button;
+    private Button button;
+
+    private Send send = new Send();
 
 
 
     @FXML
     private void initialize() {
-        CheckInitialize.setController(this);
+        LinksControll.setControllerLogin(this);
     }
 
     public void onClick(ActionEvent actionEvent) throws IOException {
         if(textLogin.getText() != null && !textLogin.getText().equals("")
                 && textPass.getText() != null && !textPass.getText().equals(""))
-            Send.sendQueryAboutIntlz(textLogin.getText(), textPass.getText());
+            send.sendQueryAboutIntlz(textLogin.getText(), textPass.getText());
 
     }
 
@@ -60,7 +63,7 @@ public class ControllerLogin{
             stage.show();
         }
         catch (Exception e){
-            throw e;
+            Main.getLog().error(e.getMessage());
         }
 
     }
@@ -77,7 +80,7 @@ public class ControllerLogin{
             stage.show();
             ((Stage) button.getScene().getWindow()).close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Main.getLog().error(e.getMessage());
         }
 
     }
@@ -89,11 +92,10 @@ public class ControllerLogin{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Ошибка");
             alert.setHeaderText(null);
-            System.out.println("Ошибка");
+            Main.getLog().info("Ошибка");
             alert.setContentText("Неверный логин или пароль!");
             alert.showAndWait();
         }
     }
-
 
 }

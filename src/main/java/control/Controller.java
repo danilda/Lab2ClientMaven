@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 import model.worker.*;
+import view.Main;
 import view.PaneForList;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class Controller implements Chat {
 
     @FXML
     private Button buttonLose;
+    private byte position;
 
     private Image pawn = new Image("/image/pawn.png");
     private Image pawnWhite = new Image("/image/pawnWhite.png");
@@ -52,14 +54,15 @@ public class Controller implements Chat {
 
     private ObservableList<Pane> chatList = FXCollections.observableArrayList ( );
     private static boolean white ;
-    private static boolean end ;
-
+    private boolean end ;
+    private Send send = new Send();
+    private ChessLogik chessLogik = new ChessLogik();
     private Box[][] matrix;
 
     private Box nowBox;
     private Box changedBox = new Box(new Pane(new ImageView()));
 
-    private static boolean nowStep;
+    private boolean nowStep;
 
     public static boolean isWhite() {
         return white;
@@ -70,13 +73,13 @@ public class Controller implements Chat {
     }
 
 
-    public static void setNowStep(boolean nowStep) {
-        Controller.nowStep = nowStep;
+    public void setNowStep(boolean nowStep) {
+        this.nowStep = nowStep;
     }
 
 
-    public static void setEnd(boolean end) {
-        Controller.end = end;
+    public void setEnd(boolean end) {
+        this.end = end;
     }
 
     public Box[][] getMatrix() {
@@ -131,19 +134,41 @@ public class Controller implements Chat {
         return queenWhite;
     }
 
+    public byte getPosition() {
+        return position;
+    }
+
+    public void setPosition(byte position) {
+        this.position = position;
+    }
+
+    public Button getButtonLose() {
+        return buttonLose;
+    }
+
+    public void setButtonLose(Button buttonLose) {
+        this.buttonLose = buttonLose;
+    }
+
     @FXML
     private void initialize(){
+
         ObservableList allChildren = board.getChildren();
         ArrayList<Pane> array = new ArrayList<>();
         matrix = new Box[8][8];
         int n = 0;
-
+        LinksControll.setControllerChess(this);
+        if(white){
+            nowStep = true;
+        }else {
+            nowStep = false;
+        }
         for(int i = 0; i < 8; i++)
             for(int y = 0; y < 8; y++){
                 matrix[i][y] = new Box((Pane) allChildren.get(n));
-                int tmp = 0;
+                int tmp = 1;
                 if(white)
-                    tmp = 1;
+                    tmp = 0;
                 if ((i+y + tmp) % 2 == 0) {
                     matrix[i][y].pane.setStyle("-fx-background-color: #ffffe7;");
                 } else {
@@ -211,19 +236,19 @@ public class Controller implements Chat {
             matrix[7][5].name = "bisWhite";
             matrix[7][5].white = true;
 
-            matrix[0][3].image.setImage(king);
-            matrix[0][3].name = "king";
+            matrix[0][4].image.setImage(king);
+            matrix[0][4].name = "king";
 
-            matrix[0][4].image.setImage(queen);
-            matrix[0][4].name = "queen";
+            matrix[0][3].image.setImage(queen);
+            matrix[0][3].name = "queen";
 
-            matrix[7][3].image.setImage(kingWhite);
-            matrix[7][3].name = "kingWhite";
-            matrix[7][3].white = true;
-
-            matrix[7][4].image.setImage(queenWhite);
-            matrix[7][4].name = "queenWhite";
+            matrix[7][4].image.setImage(kingWhite);
+            matrix[7][4].name = "kingWhite";
             matrix[7][4].white = true;
+
+            matrix[7][3].image.setImage(queenWhite);
+            matrix[7][3].name = "queenWhite";
+            matrix[7][3].white = true;
 
         } else {
             matrix[7][0].image.setImage(rook);
@@ -268,30 +293,21 @@ public class Controller implements Chat {
             matrix[0][5].name = "bisWhite";
             matrix[0][5].white = true;
 
-            matrix[7][3].image.setImage(king);
-            matrix[7][3].name = "king";
+            matrix[7][4].image.setImage(king);
+            matrix[7][4].name = "king";
 
-            matrix[7][4].image.setImage(queen);
-            matrix[7][4].name = "queen";
+            matrix[7][3].image.setImage(queen);
+            matrix[7][3].name = "queen";
 
-            matrix[0][3].image.setImage(kingWhite);
-            matrix[0][3].name = "kingWhite";
-            matrix[0][3].white = true;
-
-            matrix[0][4].image.setImage(queenWhite);
-            matrix[0][4].name = "queenWhite";
+            matrix[0][4].image.setImage(kingWhite);
+            matrix[0][4].name = "kingWhite";
             matrix[0][4].white = true;
+
+            matrix[0][3].image.setImage(queenWhite);
+            matrix[0][3].name = "queenWhite";
+            matrix[0][3].white = true;
         }
-        DoStep.setMatrix(matrix);
-        Mate.setButton(buttonLose);
-        Pad.setButton(buttonLose);
-        CheckDraw.setButton(buttonLose);
-        SuccessDraw.setButtonControll(buttonLose);
-        ControllerDraw.setButtonControll(buttonLose);
-        Pass.setButton(buttonLose);
-        Message.setController(this);
-        ControllerPawnUp.setController(this);
-        PawnUp.setController(this);
+
     }
 
     private int findIndex(Box[][] matrix , Box box){
@@ -309,7 +325,6 @@ public class Controller implements Chat {
 
 
     public void onPaneClick(Event event){
-        DoStep.setMatrix(matrix);
         if(nowStep) {
             Pane thisPane = (Pane) event.getSource();
             Box thisBox = null;
@@ -325,27 +340,15 @@ public class Controller implements Chat {
                     }
                 }
             if (isNull(nowBox) || (thisBox.name != null && thisBox.white == this.white)){
-                for (int i = 0; i < 8; i++)
-                    for (int y = 0; y < 8; y++) {
-                        if (matrix[i][y].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
-                                matrix[i][y].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
-                            int tmp = 0;
-                            if(white)
-                                tmp = 1;
-                            if ((i+y + tmp) % 2 == 0) {
-                                matrix[i][y].pane.setStyle("-fx-background-color: #ffffe7;");
-                            } else {
-                                matrix[i][y].pane.setStyle("-fx-background-color: #e6a875;");
-                            }
-                        }
-                    }
+                refreshBoad();
                 if (thisBox.white == this.white && thisBox.name != null) {
-                    ChessLogik.checkOnStep(matrix, nowI, nowY, true);
+                    chessLogik.checkOnStep(matrix, nowI, nowY, true);
                     nowBox = thisBox;
                 }
 
             }
             if (!isNull(nowBox)){
+                position = (byte) findIndex(matrix, thisBox);
                 if(thisBox.pane.getStyle().split(" ")[1].equals("#a5f2de;")
                         || thisBox.pane.getStyle().split(" ")[1].equals("#ff8584;")){
                     thisBox.image.setImage(nowBox.image.getImage());
@@ -354,11 +357,9 @@ public class Controller implements Chat {
                     changedBox.image.setImage(nowBox.image.getImage());
                     changedBox.name = nowBox.name;
                     changedBox.white = nowBox.white;
-//                    System.out.println("Мат -------->" + ChessLogik.checkOnMate(matrix));
-                    Send.sendStep(findIndex(matrix, nowBox), findIndex(matrix, thisBox) );
+                    send.sendStep(findIndex(matrix, nowBox), findIndex(matrix, thisBox) );
                     if(findIndex(matrix, thisBox)<10 && (thisBox.name.equals("pawn")
                             || thisBox.name.equals("pawnWhite"))){
-                        ControllerPawnUp.setPosition((byte) findIndex(matrix, thisBox));
                         Stage stage = new Stage();
                         Parent root = null;
                         try {
@@ -370,34 +371,20 @@ public class Controller implements Chat {
                             stage.initOwner(buttonLose.getScene().getWindow());
                             stage.show();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Main.getLog().error(e.getMessage());
                         }
                     }
-                    for (int i = 0; i < 8; i++)
-                        for (int y = 0; y < 8; y++) {
-                            if (matrix[i][y].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
-                                    matrix[i][y].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
-                                int tmp = 0;
-                                if(white)
-                                    tmp = 1;
-                                if ((i+y + tmp) % 2 == 0) {
-                                    matrix[i][y].pane.setStyle("-fx-background-color: #ffffe7;");
-                                } else {
-                                    matrix[i][y].pane.setStyle("-fx-background-color: #e6a875;");
-                                }
-                            }
-                        }
+                    refreshBoad();
                     nowBox.image.setImage(null);
                     nowBox.name = null;
                     nowBox.white = false;
-                    if(ChessLogik.checkOnMate(matrix)) {
+                    if(chessLogik.checkOnMate(matrix)) {
                         buttonLose.setText("Закрыть");
-                        Send.sendMate();
+                        send.sendMate();
                         end = true;
                         Stage stage = new Stage();
                         Parent root = null;
                         try {
-                            ControllerMate.setInvisibility(true);
                             root = FXMLLoader.load(getClass().getResource("/xml/gameWin.fxml"));
                             stage.setTitle("Крутые Шахматы");
                             stage.setResizable(false);
@@ -406,17 +393,16 @@ public class Controller implements Chat {
                             stage.initOwner(buttonLose.getScene().getWindow());
                             stage.show();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Main.getLog().error(e.getMessage());
                         }
                     }
-                    if(ChessLogik.checkOnPad(matrix)){
+                    if(chessLogik.checkOnPad(matrix)){
                         buttonLose.setText("Закрыть");
-                        Send.sendPad();
+                        send.sendPad();
                         end = true;
                         Stage stage = new Stage();
                         Parent root = null;
                         try {
-                            ControllerMate.setInvisibility(true);
                             root = FXMLLoader.load(getClass().getResource("/xml/gamePad.fxml"));
                             stage.setTitle("Крутые Шахматы");
                             stage.setResizable(false);
@@ -425,13 +411,11 @@ public class Controller implements Chat {
                             stage.initOwner(buttonLose.getScene().getWindow());
                             stage.show();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Main.getLog().error(e.getMessage());
                         }
-                        ControllerMate.setInvisibility(true);
                     }
 
                     nowBox = null;
-                    DoStep.setMatrix(matrix);
                     nowStep = false;
 
                 }
@@ -441,7 +425,7 @@ public class Controller implements Chat {
 
     }
     public void goDraw(){
-        Send.sendQueryDraw();
+        send.sendQueryDraw();
         Stage stage = new Stage();
         Parent root = null;
         try {
@@ -453,7 +437,7 @@ public class Controller implements Chat {
             stage.initOwner(board.getScene().getWindow());
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Main.getLog().error(e.getMessage());
         }
     }
 
@@ -470,10 +454,10 @@ public class Controller implements Chat {
                 ((Stage) chat.getScene().getWindow()).close();
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
+                Main.getLog().error(e.getMessage());
             }
         } else {
-            Send.sendPass();
+            send.sendPass();
             try {
                 Stage stage = new Stage();
                 Parent root = null;
@@ -485,19 +469,20 @@ public class Controller implements Chat {
                 ((Stage) chat.getScene().getWindow()).close();
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
+                Main.getLog().error(e.getMessage());
             }
         }
 
     }
 
     public void sendMessage(){
-        chatList.add(new PaneForList("вы", textMessage.getText()).returnObject());
-        chat.setItems(chatList);
-        chat.scrollTo(chatList.size()-1);
-        Send.sendMessage(textMessage.getText());
-        textMessage.setText("");
-
+        if(textMessage.getText().split("\\s").length > 1) {
+            chatList.add(new PaneForList("вы", textMessage.getText()).returnObject());
+            chat.setItems(chatList);
+            chat.scrollTo(chatList.size() - 1);
+            send.sendMessage(textMessage.getText());
+            textMessage.setText("");
+        }
     }
 
     public void refreshMessages(ArrayList parameters){
@@ -515,18 +500,25 @@ public class Controller implements Chat {
         chat.setItems(chatList);
     }
 
-    private static Box[][] swichMatrix(Box[][] matrixPr){
-        Box[][] tmpMatrix = new Box[8][8];
-        for(int i = 0 ; i < 8; i++) {
-            for (int y = 0; y < 8; y++) {
-                tmpMatrix[i][y] = new Box(new Pane(new ImageView()));
-                tmpMatrix[i][y].pane.setStyle(matrixPr[i][y].pane.getStyle());
-                tmpMatrix[i][y].white = matrixPr[i][y].white;
-                tmpMatrix[i][y].name = matrixPr[i][y].name;
-                tmpMatrix[i][y].image.setImage(matrixPr[i][y].image.getImage());
-            }
-        }
-        return tmpMatrix;
+    @Override
+    public boolean isLife() {
+        return chat.getScene().getWindow().isShowing();
     }
 
+    public void refreshBoad(){
+        for (int i = 0; i < 8; i++)
+            for (int y = 0; y < 8; y++) {
+                if (matrix[i][y].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
+                        matrix[i][y].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
+                    int tmp = 1;
+                    if(white)
+                        tmp = 0;
+                    if ((i+y + tmp) % 2 == 0) {
+                        matrix[i][y].pane.setStyle("-fx-background-color: #ffffe7;");
+                    } else {
+                        matrix[i][y].pane.setStyle("-fx-background-color: #e6a875;");
+                    }
+                }
+            }
+    }
 }

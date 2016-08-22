@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import model.LinksControll;
 import model.Send;
 import model.worker.CancelDraw;
 
@@ -14,30 +15,33 @@ import java.io.IOException;
 /**
  * Created by User on 22.07.2016.
  */
-public class ControllerDraw {
+public class ControllerDraw implements Controllers{
     @FXML
     private Button buttonCancelDraw;
+    private Send send = new Send();
 
-    private static Button buttonControll;
+    public Button getButtonCancelDraw() {
+        return buttonCancelDraw;
+    }
 
-    public static void setButtonControll(Button buttonControll) {
-        ControllerDraw.buttonControll = buttonControll;
+    public void setButtonCancelDraw(Button buttonCancelDraw) {
+        this.buttonCancelDraw = buttonCancelDraw;
     }
 
     @FXML
     private void initialize() {
-        CancelDraw.setButton(buttonCancelDraw);
+        LinksControll.setControllers(this);
     }
 
     public void onCancelClick(){
-        Send.sendCancelDraw();
+        send.sendCancelDraw();
         ((Stage) buttonCancelDraw.getScene().getWindow()).close();
     }
 
     public void onSuccessClick(){
-        Send.sendSuccessDraw();
+        send.sendSuccessDraw();
         ((Stage) buttonCancelDraw.getScene().getWindow()).close();
-        Stage stageTheLabelBelongs = (Stage) buttonControll.getScene().getWindow();
+        Stage stageTheLabelBelongs = (Stage) buttonCancelDraw.getScene().getWindow();
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/xml/lobby.fxml"));
@@ -45,6 +49,13 @@ public class ControllerDraw {
             e.printStackTrace();
         }
         stageTheLabelBelongs.setScene(new Scene(root));
+    }
 
+    @Override
+    public boolean isLife() {
+        return buttonCancelDraw.getScene().getWindow().isShowing();
+    }
+    public void cancel(){
+        ((Stage) buttonCancelDraw.getScene().getWindow()).close();
     }
 }

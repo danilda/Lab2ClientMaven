@@ -4,13 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.LinksControll;
 import model.Send;
 
 /**
  * Created by User on 22.07.2016.
  */
-public class ControllerMate {
-    private static boolean invisibility;
+public class ControllerMate implements Controllers{
 
     @FXML
     private Label changeLable;
@@ -19,18 +19,19 @@ public class ControllerMate {
     private Button buttonCancelMate;
     @FXML
     private void initialize() {
-        if(!invisibility){
-            changeLable.setVisible(false);
-        }
+        LinksControll.setControllers(this);
     }
 
-    public static void setInvisibility(boolean invisibility) {
-        ControllerMate.invisibility = invisibility;
-    }
 
     public void onCancelClick(){
         ((Stage) buttonCancelMate.getScene().getWindow()).close();
-        ControllerLobby.setDialog(null);
     }
 
+    @Override
+    public boolean isLife() {
+        return changeLable.getScene().getWindow().isShowing();
+    }
+    public void cancel(){
+        onCancelClick();
+    }
 }

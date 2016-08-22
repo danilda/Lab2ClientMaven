@@ -1,8 +1,10 @@
 package model.worker;
 
 import control.ControllerLobby;
+import control.ControllerWait;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import model.LinksControll;
 
 import java.util.ArrayList;
 
@@ -15,8 +17,9 @@ public class Cancel implements Doer {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                ((Stage) ControllerLobby.getDialog().getScene().getWindow()).close();
-                ControllerLobby.setDialog(null);
+                ((Stage)((ControllerWait) LinksControll.getControllers())
+                        .getButtonCancelWait().getScene().getWindow()).close();
+                LinksControll.setControllers(null);
             }
         });
     }

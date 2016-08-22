@@ -3,6 +3,7 @@ package model.worker;
 import control.Controller;
 import javafx.scene.image.Image;
 import model.Box;
+import model.LinksControll;
 
 import java.util.ArrayList;
 
@@ -10,16 +11,13 @@ import java.util.ArrayList;
  * Created by User on 04.08.2016.
  */
 public class PawnUp implements Doer {
-    private static Controller controller;
+    private Controller controller = LinksControll.getControllerChess();
 
-    public static void setController(Controller controller) {
-        PawnUp.controller = controller;
-    }
     @Override
     public void doAction(ArrayList parameters) {
         Box[][] matrix = controller.getMatrix();
         matrix[7][Integer.parseInt((String) parameters.get(1))%10].name = (String) parameters.get(2);
-        matrix[7][Integer.parseInt((String) parameters.get(1))%10].white = Controller.isWhite();
+        matrix[7][Integer.parseInt((String) parameters.get(1))%10].white = controller.isWhite();
         Image img = null;
         if(parameters.get(2).equals("rook"))
             img = controller.getRook();

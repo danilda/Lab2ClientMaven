@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.LinksControll;
 import model.Send;
 
 import java.io.IOException;
@@ -20,29 +21,20 @@ import java.util.ArrayList;
  * Created by User on 29.07.2016.
  */
 public class SuccessDraw implements Doer {
-    private static Button buttonDialog;
-    private static Button buttonControll;
-
-    public static void setButton(Button button) {
-        SuccessDraw.buttonDialog = button;
-    }
-
-    public static void setButtonControll(Button buttonControll) {
-        SuccessDraw.buttonControll = buttonControll;
-    }
+    private Controller controller = LinksControll.getControllerChess();
+    private Button buttonControll = controller.getButtonLose();
 
     @Override
     public void doAction(ArrayList parameters) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                ((Stage) buttonDialog.getScene().getWindow()).close();
-                buttonControll.setText("Закрыть");
-                Controller.setEnd(true);
+                LinksControll.getControllers().cancel();
+
+                controller.setEnd(true);
                 Stage stage = new Stage();
                 Parent root = null;
                 try {
-                    ControllerMate.setInvisibility(true);
                     root = FXMLLoader.load(getClass().getResource("/xml/gameDrawSuccess.fxml"));
                     stage.setTitle("Hello World");
                     stage.setResizable(false);
@@ -53,6 +45,7 @@ public class SuccessDraw implements Doer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                buttonControll.setText("Закрыть");
             }
         });
     }

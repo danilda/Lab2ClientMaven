@@ -3,6 +3,7 @@ package model.worker;
 import control.ControllerEdit;
 import control.ControllerLogin;
 import javafx.application.Platform;
+import model.LinksControll;
 import model.worker.Doer;
 
 import java.util.ArrayList;
@@ -11,11 +12,8 @@ import java.util.ArrayList;
  * Created by User on 19.07.2016.
  */
 public class CreateNewUser implements Doer {
-    private static ControllerEdit controller;
+    private ControllerEdit controller = (ControllerEdit) LinksControll.getControllers();
 
-    public static void setController(ControllerEdit controller) {
-        CreateNewUser.controller = controller;
-    }
 
     @Override
     public void doAction(ArrayList parameters) {

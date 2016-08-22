@@ -6,35 +6,39 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.LinksControll;
+import model.Parser;
 import model.Send;
 import model.worker.CreateNewUser;
+import view.Main;
 
-public class ControllerEdit {
-
-    @FXML
-    TextField regLogin;
+public class ControllerEdit implements Controllers {
 
     @FXML
-    TextField regPass;
+    private TextField regLogin;
 
     @FXML
-    TextField regPassCheck;
+    private TextField regPass;
+
+    @FXML
+    private TextField regPassCheck;
+    private Send send = new Send();
 
 
     @FXML
     private void initialize() {
-        CreateNewUser.setController(this);
+        LinksControll.setControllers(this);
     }
 
     public void endRegistration(ActionEvent actionEvent){
         if(!regLogin.getText().equals("") && !regPass.getText().equals("")
                 && regPass.getText().equals(regPassCheck.getText())){
-            Send.sendQueryRegistration(regLogin.getText(), regPass.getText());
+            send.sendQueryRegistration(regLogin.getText(), regPass.getText());
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Ошибка");
             alert.setHeaderText(null);
-            System.out.println("Ошибка");
+            Main.getLog().info("Ошибка");
             alert.setContentText("Ошибка ввода полей.");
             alert.showAndWait();
         }
@@ -47,9 +51,19 @@ public class ControllerEdit {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Ошибка");
             alert.setHeaderText(null);
-            System.out.println("Ошибка");
+            Main.getLog().info("Ошибка");
             alert.setContentText("Пользователь с данным логином уже существует.");
             alert.showAndWait();
         }
+    }
+
+
+    @Override
+    public boolean isLife() {
+        return regPass.getScene().getWindow().isShowing();
+    }
+
+    public void cancel(){
+        ((Stage) regPassCheck.getScene().getWindow()).close();
     }
 }

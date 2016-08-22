@@ -3,51 +3,49 @@ package control;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.LinksControll;
 import model.Send;
 
 /**
  * Created by User on 22.07.2016.
  */
-public class ControllerCheck {
+public class ControllerCheck implements Controllers {
+    private ControllerLobby controllerLobby = (ControllerLobby) LinksControll.getControllerLobby();
     private static String name;
-    private static String color;
+    private String color;
+    private Send send = new Send();
 
     @FXML
     private Label opNameCheck;
 
     @FXML
     private void initialize() {
-        ControllerLobby.setDialog(opNameCheck);
+        LinksControll.setControllers(this);
         opNameCheck.setText(name);
-        color = "random";
+        color = controllerLobby.getColor();
     }
 
     public void onCancelClick(){
-        Send.sendCancel();
+        send.sendCancel();
         ((Stage) opNameCheck.getScene().getWindow()).close();
-        ControllerLobby.setDialog(null);
+
     }
 
     public void onSuccessClick(){
-        Send.sendSuccess(color);
+        send.sendSuccess(color);
         ((Stage) opNameCheck.getScene().getWindow()).close();
-        ControllerLobby.setDialog(null);
-    }
-
-
-    public static String getName() {
-        return name;
     }
 
     public static void setName(String name) {
         ControllerCheck.name = name;
     }
 
-    public static String getColor() {
-        return color;
-    }
 
-    public static void setColor(String color) {
-        ControllerCheck.color = color;
+    @Override
+    public boolean isLife() {
+        return opNameCheck.getScene().getWindow().isShowing();
+    }
+    public void cancel(){
+        ((Stage) opNameCheck.getScene().getWindow()).close();
     }
 }

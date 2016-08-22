@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ChessLogik;
+import model.LinksControll;
+import view.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,15 +20,13 @@ import java.util.ArrayList;
  * Created by User on 28.07.2016.
  */
 public class Mate implements Doer {
-    private static Button button;
+    private Controller controller = LinksControll.getControllerChess();
+    private Button button = controller.getButtonLose();
 
-    public static void setButton(Button button) {
-        Mate.button = button;
-    }
 
     @Override
     public void doAction(ArrayList parameters) {
-        Controller.setEnd(true);
+        controller.setEnd(true);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -34,7 +34,6 @@ public class Mate implements Doer {
                 Stage stage = new Stage();
                 Parent root = null;
                 try {
-                    ControllerMate.setInvisibility(true);
                     root = FXMLLoader.load(getClass().getResource("/xml/gameMate.fxml"));
                     stage.setTitle("Hello World");
                     stage.setResizable(false);
@@ -43,7 +42,7 @@ public class Mate implements Doer {
                     stage.initOwner(button.getScene().getWindow());
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Main.getLog().error(e.getMessage());
                 }
             }
         });

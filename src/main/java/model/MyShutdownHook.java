@@ -7,14 +7,15 @@ import java.io.PrintWriter;
  */
 public class MyShutdownHook extends Thread{
 
-    PrintWriter out;
+    private PrintWriter out;
 
     public MyShutdownHook(PrintWriter out) {
         this.out = out;
     }
 
     public void run() {
-        Send.sendDisconnection();
+        Send send = new Send();
+        send.sendDisconnection();
     }
 
 

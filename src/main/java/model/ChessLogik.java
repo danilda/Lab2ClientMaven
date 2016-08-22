@@ -4,23 +4,24 @@ import control.Controller;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import view.Main;
 
 
 /**
  * Created by User on 06.07.2016.
  */
 public class ChessLogik {
-    private static Box[][] matrix;
-
-    public static void run(Box box, Box[][] matrix, int i, int y, boolean isYou){
-            ChessLogik.matrix = matrix;
+    private Box[][] matrix;
+    private Controller controller = LinksControll.getControllerChess();
+    public  void run(Box box, Box[][] matrix, int i, int y){
+            this.matrix = matrix;
         String name = box.name;
         switch (name) {
             case "pawn":
-                pawn(box, i, y, isYou);
+                pawn(box, i, y);
                 break;
             case "pawnWhite":
-                pawn(box, i, y, isYou);
+                pawn(box, i, y);
                 break;
             case "horse":
                 horse(box, i, y);
@@ -58,8 +59,8 @@ public class ChessLogik {
 
     }
 
-    private static void pawn(Box box, int i, int y, boolean isYou){
-        if(isYou){
+    private void pawn(Box box, int i, int y){
+        if(matrix[i][y].white == Controller.isWhite()){
             if((i - 1 >= 0) && (y >= 0) && (y < 8) && (i-1 < 8) && matrix[i-1][y].name == null)
                 matrix[i-1][y].pane.setStyle("-fx-background-color: #a5f2de;");
             if((i - 1 >= 0) && (y+1 >= 0) && (y+1 < 8) && (i-1 < 8) && matrix[i-1][y+1].name != null
@@ -84,7 +85,7 @@ public class ChessLogik {
                 matrix[i-2][y].pane.setStyle("-fx-background-color: #a5f2de;");
             }
         }
-        if(i == 1 && !isYou){
+        if(i == 1 && !matrix[i][y].white == Controller.isWhite()){
             if(matrix[i+2][y].name == null && matrix[i+1][y].name == null){
                 matrix[i+2][y].pane.setStyle("-fx-background-color: #a5f2de;");
             }
@@ -92,7 +93,7 @@ public class ChessLogik {
 
     }
 
-    private static void horse(Box box, int i, int y){
+    private  void horse(Box box, int i, int y){
             if((i - 2 >= 0) && (y - 1 >= 0) && (y - 1 < 8) && (i-2 < 8)){
                 if(matrix[i - 2][y - 1].white != box.white && matrix[i - 2][y - 1].name != null){
                     matrix[i - 2][y - 1].pane.setStyle("-fx-background-color: #ff8584;");
@@ -151,7 +152,7 @@ public class ChessLogik {
             }
     }
 
-    private static void bis(Box box, int i, int y){
+    private  void bis(Box box, int i, int y){
         int nowI = i;
         int nowY = y;
         boolean next = true;
@@ -231,14 +232,13 @@ public class ChessLogik {
         }
     }
 
-    private static void rook(Box box, int i, int y){
+    private  void rook(Box box, int i, int y){
         int nowI = i;
         int nowY = y;
         boolean next = true;
         while (next){
             nowY++;
             if(nowY < 8 ){
-
                 if( matrix[nowI][nowY].name == null ){
                     matrix[nowI][nowY].pane.setStyle("-fx-background-color: #a5f2de;");
                 } else if(matrix[nowI][nowY].white == box.white) {
@@ -307,7 +307,7 @@ public class ChessLogik {
         }
     }
 
-    private static void king(Box box, int i, int y) {
+    private  void king(Box box, int i, int y) {
         int nowI;
         int nowY;
         nowI = i + 1;
@@ -384,23 +384,16 @@ public class ChessLogik {
 
     }
 
-    private static boolean checkOnShah(Box[][] matrix, int kingI, int kingY){
+    private  boolean checkOnShah(Box[][] matrix, int kingI, int kingY){
         Box[][] tmpMatrix = swichMatrix(matrix);
         int tmp = 0;
-//        if(Controller.isWhite())
-//            tmp = 1;
-//        if ((kingI+kingY + tmp) % 2 == 0) {
-//            tmpMatrix[kingI][kingY].pane.setStyle("-fx-background-color: #ffffe7;");
-//        } else {
-//            tmpMatrix[kingI][kingY].pane.setStyle("-fx-background-color: #e6a875;");
-//        }
         boolean white = !matrix[kingI][kingY].white;
         for(int i = 0 ; i < 8; i++)
             for(int y = 0 ; y < 8; y++){
                 if(tmpMatrix[i][y].name != null && tmpMatrix[i][y].white == white){
-                    run(tmpMatrix[i][y], tmpMatrix, i, y, false);
+                    run(tmpMatrix[i][y], tmpMatrix, i, y);
                     if(tmpMatrix[kingI][kingY].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
-                        System.out.println(i + "" + y + "  что делает шах");
+                        Main.getLog().info(i + "" + y + "  что делает шах");
                         return true;
                     }
                 }
@@ -408,8 +401,8 @@ public class ChessLogik {
         return false;
     }
 
-    public static boolean checkOnMate(Box[][] matrix){
-        int tmp = findKing(!Controller.isWhite(), matrix);
+    public  boolean checkOnMate(Box[][] matrix){
+        int tmp = findKing(!controller.isWhite(), matrix);
         int kingI = tmp/10;
         int kingY = tmp%10;
         Box[][] tmpMatrix ;
@@ -417,13 +410,22 @@ public class ChessLogik {
         if(checkOnShah(tmpMatrix, kingI, kingY)){
             for(int i = 0; i < 8; i++)
                 for(int y = 0; y < 8; y++){
-                    if(tmpMatrix[i][y].white == !Controller.isWhite() && tmpMatrix[i][y].name != null) {
-                        System.out.println(i + "" + y + "  -- фигуры противника");
+                    if(tmpMatrix[i][y].white == !controller.isWhite() && tmpMatrix[i][y].name != null) {
+//                        Main.getLog().info(i + "" + y + "  -- фигуры противника");
                         checkOnStep(tmpMatrix, i, y, false);
                         for(int ki = 0; ki < 8; ki++) {
                             for (int ky = 0; ky < 8; ky++) {
                                 if (tmpMatrix[ki][ky].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
                                         tmpMatrix[ki][ky].pane.getStyle().split(" ")[1].equals("#ff8584;")) {
+                                    for(int g = 0 ; g < 8; g++)
+                                        for(int v = 0 ; v < 8; v++){
+                                            if(tmpMatrix[g][v].name != null)
+                                                if((tmpMatrix[g][v].white == !controller.isWhite()) &&
+                                                        tmpMatrix[g][v].name.equals("king")){
+                                                    System.out.println(g + " " +  v + " ---- Король" );
+                                                }
+                                        }
+                                    Main.getLog().info(ki + "" + ky + "  -- фигура которая может ходить!!!!!!!!!!!!!!!!");
                                     return false;
                                 }
                             }
@@ -435,8 +437,8 @@ public class ChessLogik {
         return false;
     }
 
-    public static boolean checkOnPad(Box[][] matrix){
-        int tmp = findKing(!Controller.isWhite(), matrix);
+    public boolean checkOnPad(Box[][] matrix){
+        int tmp = findKing(!controller.isWhite(), matrix);
         int kingI = tmp/10;
         int kingY = tmp%10;
         Box[][] tmpMatrix ;
@@ -444,7 +446,7 @@ public class ChessLogik {
         if(!checkOnShah(tmpMatrix, kingI, kingY)){
             for(int i = 0; i < 8; i++)
                 for(int y = 0; y < 8; y++){
-                    if(tmpMatrix[i][y].white == !Controller.isWhite() && tmpMatrix[i][y].name != null) {
+                    if(tmpMatrix[i][y].white == !controller.isWhite() && tmpMatrix[i][y].name != null) {
                         checkOnStep(tmpMatrix, i, y, false);
                         for(int ki = 0; ki < 8; ki++) {
                             for (int ky = 0; ky < 8; ky++) {
@@ -456,14 +458,14 @@ public class ChessLogik {
                         }
                     }
                 }
-            System.out.println("не прошло");
+            Main.getLog().info("не прошло");
             return true;
         }
         return false;
     }
 
 
-    private static Box[][] swichMatrix(Box[][] matrixPr){
+    private Box[][] swichMatrix(Box[][] matrixPr){
         Box[][] tmpMatrix = new Box[8][8];
         for(int i = 0 ; i < 8; i++) {
             for (int y = 0; y < 8; y++) {
@@ -477,19 +479,14 @@ public class ChessLogik {
         return tmpMatrix;
     }
 
-    public static void checkOnStep(Box[][] matrixPr, int i, int y , boolean isYou){
+    public void checkOnStep(Box[][] matrixPr, int i, int y , boolean isYou){
         Box[][] tmpMatrix ;
         tmpMatrix = swichMatrix(matrixPr);
-        run(tmpMatrix[i][y] , tmpMatrix, i , y , isYou);
+        run(tmpMatrix[i][y] , tmpMatrix, i , y );
         for(int k = 0; k < 8; k++)
             for(int s = 0; s < 8; s++){
                 if (tmpMatrix[k][s].pane.getStyle().split(" ")[1].equals("#a5f2de;") ||
                         tmpMatrix[k][s].pane.getStyle().split(" ")[1].equals("#ff8584;")){
-                    //
-                    if(i == 0 && y == 3){
-                        System.out.println(k + "" + s + "  ходы короля");
-                    }
-                    //
                     Box tmpBox = new Box(new Pane(new ImageView()));
                     tmpBox.name = tmpMatrix[k][s].name;
                     tmpBox.white = tmpMatrix[k][s].white;
@@ -501,9 +498,9 @@ public class ChessLogik {
                     tmpMatrix[i][y].white = false;
                     tmpMatrix[i][y].image.setImage(null);
                     String style = tmpMatrix[k][s].pane.getStyle();
-                    int tmp = 0;
-                    if(Controller.isWhite())
-                        tmp = 1;
+                    int tmp = 1;
+                    if(controller.isWhite())
+                        tmp = 0;
                     if ((k+s + tmp) % 2 == 0) {
                         tmpMatrix[k][s].pane.setStyle("-fx-background-color: #ffffe7;");
                     } else {
@@ -514,7 +511,9 @@ public class ChessLogik {
                     int kingY = tmp%10;
 
                     if(!checkOnShah(tmpMatrix, kingI, kingY )){
-                        System.out.println(k + "" + s + "  своё сыгралы");
+                        Main.getLog().info(kingI + "" + kingY + "  положение короля");
+                        Main.getLog().info(i + "" + y + "  своё сыграла Фигура");
+                        Main.getLog().info(k + "" + s + "  своё сыгралы");
                         matrixPr[k][s].pane.setStyle(style);
                     }
                     tmpMatrix[i][y].name = tmpMatrix[k][s].name;
@@ -528,7 +527,7 @@ public class ChessLogik {
     }
 
 
-    private static byte findKing(boolean color, Box[][] matrixPar){
+    private byte findKing(boolean color, Box[][] matrixPar){
         String kingName;
         byte result = 0;
         if(color){
@@ -544,8 +543,8 @@ public class ChessLogik {
         return result;
     }
 
-    public static void back(Box[][] matrix, Box boxOf, Box boxInto , Box changedBox ){
-        ChessLogik.matrix = matrix;
+    public void back(Box[][] matrix, Box boxOf, Box boxInto , Box changedBox ){
+        this.matrix = matrix;
         boxOf.image.setImage(boxInto.image.getImage());
         boxOf.white = boxInto.white;
         boxOf.name = boxInto.name;
@@ -554,8 +553,8 @@ public class ChessLogik {
         boxInto.white = changedBox.white;
     }
 
-    public static void step(Box[][] matrix, Box boxOf, Box boxInto){
-        ChessLogik.matrix = matrix;
+    public void step(Box[][] matrix, Box boxOf, Box boxInto){
+        this.matrix = matrix;
         boxInto.image.setImage(boxOf.image.getImage());
         boxInto.name = boxOf.name;
         boxInto.white = boxOf.white;
