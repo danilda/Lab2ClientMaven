@@ -16,7 +16,6 @@ public class PaneForList {
         this.message = message;
     }
 
-
     public Pane returnObject(){
         label.setText(name + " : " +message);
         pane = new Pane();
