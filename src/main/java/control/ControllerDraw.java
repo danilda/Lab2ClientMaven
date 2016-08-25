@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import model.LinksControll;
 import model.Send;
 import model.worker.CancelDraw;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -16,6 +17,8 @@ import java.io.IOException;
  * Created by User on 22.07.2016.
  */
 public class ControllerDraw implements Controllers{
+    final private static Logger log = Logger.getLogger(ControllerDraw.class);
+
     @FXML
     private Button buttonCancelDraw;
     private Send send = new Send();
@@ -46,7 +49,7 @@ public class ControllerDraw implements Controllers{
         try {
             root = FXMLLoader.load(getClass().getResource("/xml/lobby.fxml"));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         stageTheLabelBelongs.setScene(new Scene(root));
     }

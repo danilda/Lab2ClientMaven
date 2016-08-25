@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 import model.worker.*;
+import org.apache.log4j.Logger;
 import view.Main;
 import view.PaneForList;
 
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import static java.util.Objects.isNull;
 
 public class Controller implements Chat {
+
+    final private static Logger log = Logger.getLogger(Controller.class);
 
     @FXML
     private ListView<Pane> chat;
@@ -152,6 +155,8 @@ public class Controller implements Chat {
 
     @FXML
     private void initialize(){
+
+
 
         ObservableList allChildren = board.getChildren();
         ArrayList<Pane> array = new ArrayList<>();
@@ -393,7 +398,7 @@ public class Controller implements Chat {
                             stage.initOwner(buttonLose.getScene().getWindow());
                             stage.show();
                         } catch (IOException e) {
-                            Main.getLog().error(e.getMessage());
+                            log.error(e);
                         }
                     }
                     if(chessLogik.checkOnPad(matrix)){
@@ -411,7 +416,7 @@ public class Controller implements Chat {
                             stage.initOwner(buttonLose.getScene().getWindow());
                             stage.show();
                         } catch (IOException e) {
-                            Main.getLog().error(e.getMessage());
+                            log.error(e);
                         }
                     }
 
@@ -437,7 +442,7 @@ public class Controller implements Chat {
             stage.initOwner(board.getScene().getWindow());
             stage.show();
         } catch (IOException e) {
-            Main.getLog().error(e.getMessage());
+            log.error(e);
         }
     }
 
@@ -454,7 +459,7 @@ public class Controller implements Chat {
                 ((Stage) chat.getScene().getWindow()).close();
                 stage.show();
             } catch (IOException e) {
-                Main.getLog().error(e.getMessage());
+                log.error(e);
             }
         } else {
             send.sendPass();
@@ -469,7 +474,7 @@ public class Controller implements Chat {
                 ((Stage) chat.getScene().getWindow()).close();
                 stage.show();
             } catch (IOException e) {
-                Main.getLog().error(e.getMessage());
+                log.error(e);
             }
         }
 

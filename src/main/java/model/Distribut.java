@@ -36,9 +36,9 @@ public class Distribut extends Thread {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Main.getLog().error(e);
         } catch (Exception e) {
-            e.printStackTrace();
+            Main.getLog().error(e);
         }
 
     }
@@ -51,10 +51,10 @@ public class Distribut extends Thread {
             try {
                 socket.close();
             } catch (IOException e1) {
-                Main.getLog().error(e1.getMessage());
+                Main.getLog().error(e1);
             }
         } catch (IOException  e) {
-            Main.getLog().error(e.getMessage());
+            Main.getLog().error(e);
         }
         return str;
     }
@@ -82,11 +82,11 @@ public class Distribut extends Thread {
                     Main.getLog().info(handler.getResult());
                     Parser.callDoer(handler.getResult());
                 } catch (IOException e) {
-                    Main.getLog().error(e.getMessage());
+                    Main.getLog().error(e);
                 }catch (ParserConfigurationException e) {
-                    Main.getLog().error(e.getMessage());
+                    Main.getLog().error(e);
                 } catch (SAXException e) {
-                    Main.getLog().error(e.getMessage());
+                    Main.getLog().error(e);
                 }
             }
         }

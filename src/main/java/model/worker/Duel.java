@@ -50,7 +50,7 @@ public class Duel implements Doer {
                     stage.show();
 
                 } catch (Exception e){
-
+                    Main.getLog().error(e);
                 }
             }
         });

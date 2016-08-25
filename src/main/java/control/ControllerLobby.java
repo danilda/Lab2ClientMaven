@@ -23,6 +23,7 @@ import model.LinksControll;
 import model.Parser;
 import model.Send;
 import model.worker.*;
+import org.apache.log4j.Logger;
 import view.Main;
 import view.PaneForList;
 
@@ -37,6 +38,7 @@ import static java.util.Objects.isNull;
  * Created by User on 12.07.2016.
  */
 public class ControllerLobby implements Chat {
+    final private static Logger log = Logger.getLogger(ControllerEdit.class);
     private String currentItem = null;
     public static ObservableList<String> itemsList = FXCollections.observableArrayList();
     private ObservableList<Pane> chatList = FXCollections.observableArrayList ( );
@@ -143,7 +145,6 @@ public class ControllerLobby implements Chat {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 int tmpColor = (int) newValue;
-                System.out.println(tmpColor);
                 if (tmpColor == 0) {
                     color = "white";
                 }
@@ -173,13 +174,13 @@ public class ControllerLobby implements Chat {
                 stage.initOwner(myWinsL.getScene().getWindow());
                 stage.show();
             } catch (Exception e) {
-                Main.getLog().error(e.getMessage());
+                log.error(e.getMessage());
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Внимание!");
             alert.setHeaderText(null);
-            Main.getLog().info("Ошибка");
+            log.info("Ошибка");
             alert.setContentText("Выберите противника в списке!");
             alert.showAndWait();
         }

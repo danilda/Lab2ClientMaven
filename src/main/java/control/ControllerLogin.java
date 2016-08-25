@@ -63,7 +63,7 @@ public class ControllerLogin{
             stage.show();
         }
         catch (Exception e){
-            Main.getLog().error(e.getMessage());
+            Main.getLog().error(e);
         }
 
     }
@@ -80,7 +80,7 @@ public class ControllerLogin{
             stage.show();
             ((Stage) button.getScene().getWindow()).close();
         } catch (IOException e) {
-            Main.getLog().error(e.getMessage());
+            Main.getLog().error(e);
         }
 
     }

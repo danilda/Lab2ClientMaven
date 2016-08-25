@@ -39,7 +39,7 @@ public class CheckDuel implements Doer {
                     stage.show();
                 }
                 catch (Exception e){
-                    Main.getLog().error(e.getMessage());
+                    Main.getLog().error(e);
                 }
             }
         });

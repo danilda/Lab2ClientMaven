@@ -42,7 +42,7 @@ public class Mate implements Doer {
                     stage.initOwner(button.getScene().getWindow());
                     stage.show();
                 } catch (IOException e) {
-                    Main.getLog().error(e.getMessage());
+                    Main.getLog().error(e);
                 }
             }
         });

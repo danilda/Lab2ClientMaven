@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.LinksControll;
 import model.Send;
+import view.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class SuccessDraw implements Doer {
                     stage.initOwner(buttonControll.getScene().getWindow());
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Main.getLog().error(e);
                 }
                 buttonControll.setText("Закрыть");
             }

@@ -10,9 +10,11 @@ import model.LinksControll;
 import model.Parser;
 import model.Send;
 import model.worker.CreateNewUser;
+import org.apache.log4j.Logger;
 import view.Main;
 
 public class ControllerEdit implements Controllers {
+    final private static Logger log = Logger.getLogger(ControllerEdit.class);
 
     @FXML
     private TextField regLogin;
@@ -38,7 +40,7 @@ public class ControllerEdit implements Controllers {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Ошибка");
             alert.setHeaderText(null);
-            Main.getLog().info("Ошибка");
+            log.info("Ошибка");
             alert.setContentText("Ошибка ввода полей.");
             alert.showAndWait();
         }
@@ -51,7 +53,7 @@ public class ControllerEdit implements Controllers {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Ошибка");
             alert.setHeaderText(null);
-            Main.getLog().info("Ошибка");
+            log.info("Ошибка");
             alert.setContentText("Пользователь с данным логином уже существует.");
             alert.showAndWait();
         }
