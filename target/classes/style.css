@@ -1,2 +1,0 @@
-#chat .list-cell:odd { -fx-background-color: white; /* 1 */ }
-#chat .list-cell:even { -fx-background-color: white; /* for information */ }
