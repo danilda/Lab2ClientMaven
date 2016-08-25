@@ -25,4 +25,5 @@ public class PaneForList {
         pane.getChildren().add(label);
         return pane;
     }
+
 }
