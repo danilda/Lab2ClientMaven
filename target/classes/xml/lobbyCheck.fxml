@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="332.0" maxWidth="610.0" minHeight="-Infinity" minWidth="310.0" prefHeight="239.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerCheck">
+   <children>
+      <AnchorPane prefHeight="333.0" prefWidth="257.0">
+         <children>
+            <Button layoutX="179.0" layoutY="167.0" mnemonicParsing="false" onAction="#onCancelClick" prefHeight="29.0" prefWidth="109.0" text="Отказать" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="167.0" />
+            <Label layoutX="55.0" layoutY="25.0" prefHeight="38.0" prefWidth="200.0" text="Вас вызывают на дуэль!">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="63.0" layoutY="53.0" prefHeight="38.0" prefWidth="185.0" text="Принимаете вызов от">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="22.0" layoutY="167.0" mnemonicParsing="false" onAction="#onSuccessClick" prefHeight="29.0" prefWidth="109.0" text="Принять" />
+            <Label fx:id="opNameCheck" layoutX="47.0" layoutY="91.0" prefHeight="27.0" prefWidth="218.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
