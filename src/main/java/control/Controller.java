@@ -483,7 +483,9 @@ public class Controller implements Chat {
     }
 
     public void sendMessage(){
-        if(textMessage.getText().split("\\s").length > 1) {
+        log.info("sendMessage - is clicked");
+        if(textMessage.getText().split("\\s").length > 1 || !textMessage.getText().split("\\s")[0].isEmpty()) {
+            log.info("sendMessage - is inside");
             chatList.add(new PaneForList("вы", textMessage.getText()).returnObject());
             chat.setItems(chatList);
             chat.scrollTo(chatList.size() - 1);
