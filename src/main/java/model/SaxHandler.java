@@ -18,7 +18,7 @@ public class SaxHandler extends DefaultHandler {
     private String nameOfClass;
     private ArrayList<String> result;
 
-    private Stack<String> elementStack = new Stack<>();
+    private Stack<String> elementStack = new Stack<String>();
 
     public ArrayList getResult() {
         return result;
@@ -42,7 +42,7 @@ public class SaxHandler extends DefaultHandler {
         if(value.length() == 0) return; // ignore white space
 
         if("metaInfo".equals(currentElement())){
-            result = new ArrayList<>();
+            result = new ArrayList<String>();
             nameOfClass = value;
             result.add(0, value);
             i++;

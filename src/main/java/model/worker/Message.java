@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class Message implements Doer {
     private Chat controller;
 
-
     @Override
     public void doAction(ArrayList parameters) {
-        if(LinksControll.getControllerChess().isLife()){
+
+        if(LinksControll.getControllerChess() != null && LinksControll.getControllerChess().isLife()){
             controller = LinksControll.getControllerChess();
         } else {
             controller = LinksControll.getControllerLobby();

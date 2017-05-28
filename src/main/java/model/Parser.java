@@ -1,7 +1,9 @@
 package model;
 
+import control.Controller;
 import control.Controllers;
 import model.worker.Doer;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 

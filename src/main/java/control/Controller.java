@@ -159,10 +159,12 @@ public class Controller implements Chat {
 
 
         ObservableList allChildren = board.getChildren();
-        ArrayList<Pane> array = new ArrayList<>();
+        ArrayList<Pane> array = new ArrayList<Pane>();
         matrix = new Box[8][8];
         int n = 0;
+
         LinksControll.setControllerChess(this);
+
         if(white){
             nowStep = true;
         }else {

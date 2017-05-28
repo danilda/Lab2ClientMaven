@@ -4,11 +4,13 @@ import control.Controller;
 import control.ControllerLobby;
 import control.ControllerLogin;
 import control.Controllers;
+import org.apache.log4j.Logger;
 
 /**
  * Created by User on 18.08.2016.
  */
 public class LinksControll {
+    final private static Logger log = Logger.getLogger(LinksControll.class);
     private static Controllers controllers;
 
     private static Controller controllerChess;
@@ -30,6 +32,7 @@ public class LinksControll {
     }
 
     public static void setControllerChess(Controller controllerChess) {
+        log.info("setControllerChess - " + controllerChess);
         LinksControll.controllerChess = controllerChess;
     }
 
